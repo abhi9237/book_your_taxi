@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ class HomeController extends GetxController {
   final Rx<TextEditingController> searchController =
       TextEditingController().obs;
   RxInt selectedIndex = 0.obs;
+  RxString userAddress = ''.obs;
   List<Map<String, dynamic>> whereToGoList = [
     {
       'icon': Icons.location_on_outlined,
@@ -32,9 +34,34 @@ class HomeController extends GetxController {
     // updateCamera();
   }
 
+  void onTapWhereToGoTab(int index,BuildContext context){
+
+    if(index == 0){
+      context.push(RouteConstant.destination);
+    }
+
+  }
+
+
+  Future<void> getAddress(double lat, double lng) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+
+    Placemark place = placemarks.first;
+    searchController.value.text =
+        "${place.street.toString()}, ${place.locality.toString()}, ${place.country.toString()}";
+
+    log(place.street.toString());
+    log(place.locality.toString());
+    log(place.country.toString());
+  }
+
   void onTapSavedPlaces(BuildContext context) {
     context.push(RouteConstant.savedPlaces);
   }
+  void onTapSearchAddress(BuildContext context) {
+    context.push(RouteConstant.searchAddress);
+  }
+
 
   void onTapSelectedIndex(int index) {
     selectedIndex.value = index;
@@ -67,6 +94,7 @@ class HomeController extends GetxController {
     }
     Position position = await Geolocator.getCurrentPosition();
     currentLocation.value = LatLng(position.latitude, position.longitude);
+    getAddress(currentLocation.value.latitude, currentLocation.value.longitude);
     updateCamera();
     update();
 

@@ -15,6 +15,9 @@ class HomeScreenTopWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: CommonMapTextFormFilled(
+            onTap: () {
+              controller.onTapSearchAddress(context);
+            },
             hintText: 'Enter your location',
             controller: controller.searchController.value,
             suffixIcon: Icons.bookmark_add_outlined,
@@ -92,6 +95,7 @@ class HomeScreenTopWidget extends StatelessWidget {
                       index: index,
                       onTap: () {
                         controller.selectedIndex.value = index;
+                        controller.onTapWhereToGoTab(index,context);
                       },
                     );
                   },

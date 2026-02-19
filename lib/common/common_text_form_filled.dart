@@ -85,8 +85,11 @@ class CommonMapTextFormFilled extends StatelessWidget {
   final Widget? prefixIcon;
   final VoidCallback? onTapSuffixIcon;
   final VoidCallback? onTapPrefixIcon;
+  final VoidCallback? onTap;
+  final Function(String)? onChangeText;
   final int? maxLength;
   final TextInputType? keyBoardType;
+  final Color? fillColor;
 
   const CommonMapTextFormFilled({
     super.key,
@@ -96,14 +99,19 @@ class CommonMapTextFormFilled extends StatelessWidget {
     this.suffixIcon,
     this.onTapSuffixIcon,
     this.onTapPrefixIcon,
+    this.onTap,
     this.prefixIcon,
     this.maxLength,
     this.keyBoardType,
+    this.fillColor,
+    this.onChangeText,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChangeText,
+      onTap: onTap,
       maxLength: maxLength,
       keyboardType: keyBoardType,
       style: TextStyle(color: ColorConstant.blackColor),
@@ -113,7 +121,7 @@ class CommonMapTextFormFilled extends StatelessWidget {
       obscureText: isObscureIcon ?? false,
       controller: controller,
       decoration: InputDecoration(
-        fillColor: ColorConstant.whiteColor,
+        fillColor: fillColor ?? ColorConstant.whiteColor,
         filled: true,
         counterText: '',
         prefixIcon: prefixIcon,

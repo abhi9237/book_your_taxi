@@ -5,7 +5,9 @@ import 'package:book_your_taxi/presentation/auth/onBoardingPages/on_boarding_pag
 import 'package:book_your_taxi/presentation/auth/signUp_screen/sign_up_screen.dart';
 import 'package:book_your_taxi/presentation/auth/verify_code/verify_code.dart';
 import 'package:book_your_taxi/presentation/bottom_nav/bottom_nav_screen.dart';
+import 'package:book_your_taxi/presentation/destination/destination.dart';
 import 'package:book_your_taxi/presentation/saved_places/saved_places.dart';
+import 'package:book_your_taxi/presentation/search_address/search_address.dart';
 import 'package:book_your_taxi/presentation/splash_screen/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -103,6 +105,20 @@ abstract class AppRouter {
         name: RouteConstant.savedPlaces,
         builder: (context, state) {
           return SavedPlaces();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.searchAddress,
+        name: RouteConstant.searchAddress,
+        builder: (context, state) {
+          return SearchAddress();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.destination,
+        name: RouteConstant.destination,
+        builder: (context, state) {
+          return DestinationScreen();
         },
       ),
     ],

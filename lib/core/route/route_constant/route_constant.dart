@@ -12,4 +12,6 @@ class RouteConstant {
   static const String locationAccess = '/locationAccess';
   static const String bottomNav = '/bottomNav';
   static const String savedPlaces = '/savedPlaces';
+  static const String searchAddress = '/searchAddress';
+  static const String destination = '/destination';
 }

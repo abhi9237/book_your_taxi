@@ -1,6 +1,9 @@
 import 'package:book_your_taxi/core/app_theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'core/localisation/app_translation.dart';
 import 'core/route/app_router.dart';
 
 void main() {
@@ -12,11 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp.router(
+      routeInformationProvider: AppRouter.router.routeInformationProvider,
+      routeInformationParser: AppRouter.router.routeInformationParser,
+      routerDelegate: AppRouter.router.routerDelegate,
+      translations: AppTranslations(),
+      locale: Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
+      fallbackLocale: Locale('en', 'US'),
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
+
 
     );
   }

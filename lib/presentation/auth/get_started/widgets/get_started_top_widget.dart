@@ -2,8 +2,11 @@ import 'package:book_your_taxi/controller/auth_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../common/common_button.dart';
 import '../../../../core/color_constant/color_constant.dart';
+import '../../../../core/localisation/string_constant/string_constant.dart';
+import '../../../../core/localisation/string_constant/string_constant_key.dart';
 
 class GetStartedTopWidget extends StatelessWidget {
   final AuthController controller;
@@ -26,11 +29,11 @@ class GetStartedTopWidget extends StatelessWidget {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                text: 'Welcome to Your ',
+                text: AppStringConstant.welcomeToYour.tr,
                 style: TextStyle(color: ColorConstant.blackColor, fontSize: 26,fontWeight: FontWeight.w700),
                 children: [
                   TextSpan(
-                    text: 'Ultimate Transportation Solution',
+                    text: AppStringConstant.ultimateTransportationSolution.tr,
                     style: TextStyle(
                       color: ColorConstant.appColor,
                       fontSize: 26,
@@ -44,7 +47,7 @@ class GetStartedTopWidget extends StatelessWidget {
             SizedBox(height: 30),
 
             Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+              AppStringConstant.loremIpsum.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: ColorConstant.blackGreyColor,
@@ -52,17 +55,17 @@ class GetStartedTopWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            CommonButton(buttonText: "Let's Get Started",onTap: (){
+            CommonButton(buttonText: AppStringConstant.letsGetStarted.tr,onTap: (){
               controller.onTapGetStarted(context);
             },),
             SizedBox(height: 20),
             RichText(
               text: TextSpan(
-                text: 'Already have an account? ',
+                text: AppStringConstant.alreadyHaveAccount.tr,
                 style: TextStyle(color: ColorConstant.blackColor, fontSize: 14),
                 children: [
                   TextSpan(
-                    text: 'Sign in',
+                    text: AppStringConstant.signIn.tr,
                     style: TextStyle(
                       color: ColorConstant.appColor,
                       fontSize: 14,

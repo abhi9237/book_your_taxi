@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/common/place_model.dart';
 import '../presentation/search_address/repo/search_repository.dart';
@@ -13,6 +14,10 @@ class SearchAddressController extends GetxController {
 
   List<PlaceModel> results = [];
   RxBool isLoading = false.obs;
+
+  void onTapBackButton(BuildContext context) {
+    context.pop();
+  }
 
   Future<void> search(String address) async {
     if (address.isEmpty) {

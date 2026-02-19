@@ -15,7 +15,7 @@ class SearchAddressTopWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: (){
-              // controller.onTapBackButton(context);
+            controller.onTapBackButton(context);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),

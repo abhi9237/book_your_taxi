@@ -16,7 +16,7 @@ import '../../presentation/auth/get_started/get_started.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: RouteConstant.bottomNav,
+    initialLocation: RouteConstant.splash,
 
     // redirect: (BuildContext context, GoRouterState state) async {
     //

@@ -6,7 +6,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'core/localisation/app_translation.dart';
 import 'core/route/app_router.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -23,10 +24,8 @@ class MyApp extends StatelessWidget {
       locale: Locale('en', 'US'),
       debugShowCheckedModeBanner: false,
       fallbackLocale: Locale('en', 'US'),
-      title: 'Flutter Demo',
+      title: 'BYT',
       theme: AppTheme.lightTheme,
-
-
     );
   }
 }

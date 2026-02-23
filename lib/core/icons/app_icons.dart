@@ -17,4 +17,5 @@ class AppIcons {
   static const String bookingSelectedIcon = '$path/booking_selected_icon.png';
   static const String bookingUnselectedIcon =
       '$path/booking_unselected_icon.png';
+  static const String miniCarIcon = '$path/mini_car.png';
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -18,8 +20,8 @@ class DestinationPickupController extends GetxController {
     );
   }
 
-  void onTapBackButton(BuildContext context){
-     context.pop();
+  void onTapBackButton(BuildContext context) {
+    context.pop();
   }
 
   void onTapPaymentMethods(BuildContext context) {

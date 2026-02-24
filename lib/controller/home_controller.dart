@@ -44,28 +44,15 @@ class HomeController extends GetxController {
     // updateCamera();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    // if (openRideFoundedOnLoad) {
-    //   openRideFoundedOnLoad = false;
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     if (Get.context != null) {
-    //       openRideFoundedBottomSheet(Get.context!);
-    //     }
-    //   });
-    // }
-  }
+
 
   void onTapWhereToGoTab(int index, BuildContext context) {
     if (index == 0) {
       context.push(RouteConstant.destination).then((v) {
         log('yes');
-        if (v != null) {
           if (context.mounted) {
             openRideFoundedBottomSheet(context);
           }
-        }
       });
     }
   }

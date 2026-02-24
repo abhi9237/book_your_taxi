@@ -18,8 +18,9 @@ class SearchingRideController extends GetxController {
         return;
       }
       // HomeController.openRideFoundedOnLoad = true;
-
-      context.go(RouteConstant.bottomNav);
+context.pop();
+context.pop();
+      // context.go(RouteConstant.bottomNav);
     });
   }
 

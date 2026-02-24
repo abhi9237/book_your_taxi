@@ -4,7 +4,6 @@ import '../core/color_constant/color_constant.dart';
 import '../core/icons/app_icons.dart';
 
 class PickUpWidget extends StatelessWidget {
-
   const PickUpWidget({super.key});
 
   @override
@@ -94,40 +93,42 @@ class PickUpWidget extends StatelessWidget {
   }
 }
 
-
 class CommonShaderContainer extends StatelessWidget {
   final Widget child;
-  const CommonShaderContainer({super.key, required this.child});
+  final VoidCallback? onTap;
+  const CommonShaderContainer({super.key, required this.child, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-      margin: EdgeInsets.only(top: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorConstant.whiteColor,
-        boxShadow: [
-          BoxShadow(
-            color: ColorConstant.lightGreyColor.withValues(alpha: 0.3),
-            offset: Offset(0, 1),
-            spreadRadius: 1,
-            blurRadius: 10,
-          ),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        margin: EdgeInsets.only(top: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: ColorConstant.whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: ColorConstant.lightGreyColor.withValues(alpha: 0.3),
+              offset: Offset(0, 1),
+              spreadRadius: 1,
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
-
 
 class CommonTaxiWidget extends StatelessWidget {
   const CommonTaxiWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  CommonShaderContainer(
+    return CommonShaderContainer(
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.3,
         decoration: BoxDecoration(
@@ -155,9 +156,7 @@ class CommonTaxiWidget extends StatelessWidget {
             Container(
               height: 1,
               width: MediaQuery.sizeOf(context).width * 0.7,
-              color: ColorConstant.lightGreyColor.withValues(
-                alpha: 0.2,
-              ),
+              color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
             ),
             SizedBox(height: 5),
 
@@ -211,6 +210,3 @@ class CommonTaxiWidget extends StatelessWidget {
     );
   }
 }
-
-
-

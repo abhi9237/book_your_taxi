@@ -1,5 +1,5 @@
 class AppIcons {
-  static const String path = 'assets/icons/';
+  static const String path = 'assets/icons';
   static const String appIcon = '$path/app_icon.png';
   static const String moveForward = '$path/move_forward_icon.png';
   static const String moveBackward = '$path/move_backWard_icon.png';

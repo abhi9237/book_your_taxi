@@ -6,7 +6,9 @@ import '../common/common_bottom_sheet.dart';
 class DestinationPickupController extends GetxController {
 
   void onTapConfirmLocation(BuildContext context) {
-    openBookMiniBottomSheet(context);
+    openBookMiniBottomSheet(context,
+
+    );
   }
 
 }

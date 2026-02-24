@@ -10,7 +10,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../common/common_bottom_sheet.dart';
+
 class HomeController extends GetxController {
+
   final Completer<GoogleMapController> mapController =
       Completer<GoogleMapController>();
   Rx<LatLng> currentLocation = LatLng(0, 0).obs;
@@ -31,17 +34,41 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getCurrentLocation();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (Get.context != null) {
+          openRideFoundedBottomSheet(Get.context!);
+        }
+      });
+
     // updateCamera();
   }
 
-  void onTapWhereToGoTab(int index,BuildContext context){
-
-    if(index == 0){
-      context.push(RouteConstant.destination);
-    }
-
+  @override
+  void onReady() {
+    super.onReady();
+    // if (openRideFoundedOnLoad) {
+    //   openRideFoundedOnLoad = false;
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     if (Get.context != null) {
+    //       openRideFoundedBottomSheet(Get.context!);
+    //     }
+    //   });
+    // }
   }
 
+  void onTapWhereToGoTab(int index, BuildContext context) {
+    if (index == 0) {
+      context.push(RouteConstant.destination).then((v) {
+        log('yes');
+        if (v != null) {
+          if (context.mounted) {
+            openRideFoundedBottomSheet(context);
+          }
+        }
+      });
+    }
+  }
 
   Future<void> getAddress(double lat, double lng) async {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
@@ -58,10 +85,10 @@ class HomeController extends GetxController {
   void onTapSavedPlaces(BuildContext context) {
     context.push(RouteConstant.savedPlaces);
   }
+
   void onTapSearchAddress(BuildContext context) {
     context.push(RouteConstant.searchAddress);
   }
-
 
   void onTapSelectedIndex(int index) {
     selectedIndex.value = index;

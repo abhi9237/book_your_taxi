@@ -4,9 +4,12 @@ import 'package:book_your_taxi/presentation/auth/login_screen/login_ui.dart';
 import 'package:book_your_taxi/presentation/auth/onBoardingPages/on_boarding_pages.dart';
 import 'package:book_your_taxi/presentation/auth/signUp_screen/sign_up_screen.dart';
 import 'package:book_your_taxi/presentation/auth/verify_code/verify_code.dart';
+import 'package:book_your_taxi/presentation/add_card/add_card.dart';
 import 'package:book_your_taxi/presentation/bottom_nav/bottom_nav_screen.dart';
 import 'package:book_your_taxi/presentation/destination/destination.dart';
+import 'package:book_your_taxi/presentation/payment_methods/payment_methods.dart';
 import 'package:book_your_taxi/presentation/saved_places/saved_places.dart';
+import 'package:book_your_taxi/presentation/searching_ride/searching_ride.dart';
 import 'package:book_your_taxi/presentation/search_address/search_address.dart';
 import 'package:book_your_taxi/presentation/splash_screen/splash_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -119,6 +122,27 @@ abstract class AppRouter {
         name: RouteConstant.destination,
         builder: (context, state) {
           return DestinationScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.paymentMethods,
+        name: RouteConstant.paymentMethods,
+        builder: (context, state) {
+          return PaymentMethodsScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.addCard,
+        name: RouteConstant.addCard,
+        builder: (context, state) {
+          return AddCardScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.searchingRide,
+        name: RouteConstant.searchingRide,
+        builder: (context, state) {
+          return SearchingRideScreen();
         },
       ),
     ],

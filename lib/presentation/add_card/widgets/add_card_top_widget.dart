@@ -1,42 +1,42 @@
-import 'package:book_your_taxi/controller/destination_pickup_controller.dart';
+import 'package:book_your_taxi/controller/add_card_controller.dart';
+import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
-import '../../../core/color_constant/color_constant.dart';
 
-class DestinationTopWidget extends StatelessWidget {
-  final DestinationPickupController controller;
-  const DestinationTopWidget({super.key,required this.controller});
+class AddCardTopWidget extends StatelessWidget {
+  final AddCardController controller;
+
+  const AddCardTopWidget({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
-            onTap: (){
-         controller.onTapBackButton(context);
+            onTap: () {
+              controller.onTapBack(context);
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: ColorConstant.whiteColor,
                 border: Border.all(color: ColorConstant.lightGreyColor),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.keyboard_backspace_outlined),
+              child: const Icon(Icons.keyboard_backspace_outlined),
             ),
           ),
-          Text(
-            'Destination',
-            textAlign: TextAlign.center,
+          const Text(
+            'Add Card',
             style: TextStyle(
               color: ColorConstant.blackColor,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(width: 45,)
+          const SizedBox(width: 40),
         ],
       ),
     );

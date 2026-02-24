@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:wheel_picker/wheel_picker.dart';
@@ -172,8 +170,6 @@ class _WheelDateTimePickerState extends State<WheelDateTimePicker> {
         selectedIndexColor: ColorConstant.appColor,
         onIndexChanged: (index, interactionType) {
           widget.onChanged?.call(getSelectedDateTime());
-
-
         },
         style: WheelPickerStyle(
           itemExtent: textStyle.fontSize! * textStyle.height!,

@@ -14,4 +14,7 @@ class RouteConstant {
   static const String savedPlaces = '/savedPlaces';
   static const String searchAddress = '/searchAddress';
   static const String destination = '/destination';
+  static const String paymentMethods = '/paymentMethods';
+  static const String addCard = '/addCard';
+  static const String searchingRide = '/searchingRide';
 }

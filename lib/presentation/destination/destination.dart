@@ -9,7 +9,6 @@ import '../../controller/destination_pickup_controller.dart';
 import '../../core/color_constant/color_constant.dart';
 
 class DestinationScreen extends StatelessWidget {
-
   const DestinationScreen({super.key});
 
   @override
@@ -50,7 +49,9 @@ class DestinationScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
-                  DestinationTopWidget(),
+                  DestinationTopWidget(
+                    controller: controller,
+                  ),
                   DestinationPickupWidget(),
                   DestinationSavedPlacesWidget()
                 ],

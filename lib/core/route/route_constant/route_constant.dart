@@ -18,4 +18,5 @@ class RouteConstant {
   static const String addCard = '/addCard';
   static const String searchingRide = '/searchingRide';
   static const String congratulations = '/congratulations';
+  static const String eReceipt = '/eReceipt';
 }

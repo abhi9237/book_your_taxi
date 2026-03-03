@@ -188,7 +188,7 @@ Future<void> openBookMiniBottomSheet(
   );
 }
 
-Future<void> openRideFoundedBottomSheet(BuildContext context) async {
+Future<void> openRideFoundedBottomSheet(BuildContext context,{required VoidCallback onTap}) async {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -312,10 +312,7 @@ Future<void> openRideFoundedBottomSheet(BuildContext context) async {
               const SizedBox(height: 20),
               CommonButton(
                 buttonText: 'Request Ride',
-                onTap: () {
-                  context.pop();
-                  context.push(RouteConstant.searchingRide, extra: 'accept');
-                },
+                onTap:onTap,
               ),
               const SizedBox(height: 8),
             ],
@@ -407,5 +404,159 @@ Future<void> openScheduleBottomSheet(BuildContext context) async {
         ),
       );
     },
+  );
+}
+Future openDriverArrivingBottomSheet(BuildContext context) {
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: ColorConstant.whiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 3,
+                  width: MediaQuery.sizeOf(context).width * 0.2,
+                  decoration: BoxDecoration(
+                    color: ColorConstant.lightGreyColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Driver is Arriving...',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: ColorConstant.blackColor,
+                      ),
+                    ),
+                    Text(
+                      '5 min Away',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: ColorConstant.blackGreyColor.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                const Divider(color: ColorConstant.lightGreyColor),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorConstant.appColor,
+                      ),
+                      child: const Icon(Icons.person, color: Colors.white),
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Jenny Wilson',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: ColorConstant.blackColor,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Sedan',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: ColorConstant.blackGreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildCircleIcon(Icons.message, ColorConstant.appColor),
+                    const SizedBox(width: 10),
+                    _buildCircleIcon(Icons.call, ColorConstant.appColor),
+                  ],
+                ),
+                const SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildStatsBox('Rate per', '\$1.25'),
+                    _buildStatsBox('Car Number', 'GR 678-UVWX'),
+                    _buildStatsBox('No. of Seats', '4 Seats'),
+                  ],
+                ),
+                const SizedBox(height: 25),
+                CommonButton(
+                  buttonText: 'Cancel Ride',
+                  onTap: () => Navigator.pop(context),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget _buildCircleIcon(IconData icon, Color color) {
+  return Container(
+    height: 40,
+    width: 40,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
+    ),
+    child: Icon(icon, color: color, size: 18),
+  );
+}
+
+Widget _buildStatsBox(String title, String value) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: ColorConstant.blackGreyColor.withValues(alpha: 0.6),
+        ),
+      ),
+      const SizedBox(height: 4),
+      Text(
+        value,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: ColorConstant.blackColor,
+        ),
+      ),
+    ],
   );
 }

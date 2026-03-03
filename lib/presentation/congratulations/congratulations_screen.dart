@@ -1,6 +1,9 @@
 import 'package:book_your_taxi/common/common_button.dart';
+import 'package:book_your_taxi/controller/home_controller.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
+import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CongratulationsScreen extends StatelessWidget {
   const CongratulationsScreen({super.key});
@@ -61,13 +64,15 @@ class CongratulationsScreen extends StatelessWidget {
               CommonButton(
                 buttonText: 'View E-Receipt',
                 onTap: () {
-                  // TODO: Implement E-Receipt view
+                  context.push(RouteConstant.eReceipt);
                 },
               ),
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  // TODO: Implement track driver
+                  // context.go(RouteConstant.bottomNav);
+                  context.pop();
+                  // context.pop();
                 },
                 child: const Text(
                   'Track Driver',

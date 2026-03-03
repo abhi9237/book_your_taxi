@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,8 +11,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/common_bottom_sheet.dart';
 
 class HomeController extends GetxController {
-  static RxBool showRideFoundedOnLoad = false.obs;
-
   final Completer<GoogleMapController> mapController =
       Completer<GoogleMapController>();
   Rx<LatLng> currentLocation = LatLng(0, 0).obs;
@@ -36,37 +32,27 @@ class HomeController extends GetxController {
     super.onInit();
     getCurrentLocation();
 
-    ever(showRideFoundedOnLoad, (value) {
-      if (value) {
-        if (Get.context != null) {
-          openRideFoundedBottomSheet(Get.context!);
-          showRideFoundedOnLoad.value = false;
-        }
-      }
-    });
-
-    // Handle initial state if it was set before worker started
-    if (showRideFoundedOnLoad.value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (Get.context != null) {
-          openRideFoundedBottomSheet(Get.context!);
-          showRideFoundedOnLoad.value = false;
-        }
-      });
-    }
 
     // updateCamera();
   }
-
-
 
   void onTapWhereToGoTab(int index, BuildContext context) {
     if (index == 0) {
       context.push(RouteConstant.destination).then((v) {
         log('yes');
-          if (context.mounted) {
-            openRideFoundedBottomSheet(context);
-          }
+        if (context.mounted) {
+          openRideFoundedBottomSheet(
+            context,
+            onTap: () {
+              context.pop();
+              context.push(RouteConstant.searchingRide, extra: 'accept').then((
+                value,
+              ) {
+                openDriverArrivingBottomSheet(context);
+              });
+            },
+          );
+        }
       });
     }
   }

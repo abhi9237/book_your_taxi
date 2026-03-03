@@ -13,6 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/common_bottom_sheet.dart';
 
 class HomeController extends GetxController {
+  static RxBool showRideFoundedOnLoad = false.obs;
 
   final Completer<GoogleMapController> mapController =
       Completer<GoogleMapController>();
@@ -35,11 +36,24 @@ class HomeController extends GetxController {
     super.onInit();
     getCurrentLocation();
 
+    ever(showRideFoundedOnLoad, (value) {
+      if (value) {
+        if (Get.context != null) {
+          openRideFoundedBottomSheet(Get.context!);
+          showRideFoundedOnLoad.value = false;
+        }
+      }
+    });
+
+    // Handle initial state if it was set before worker started
+    if (showRideFoundedOnLoad.value) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (Get.context != null) {
           openRideFoundedBottomSheet(Get.context!);
+          showRideFoundedOnLoad.value = false;
         }
       });
+    }
 
     // updateCamera();
   }

@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class SearchingRideScreen extends StatelessWidget {
-  const SearchingRideScreen({super.key});
+  final String? searchingFor;
+  const SearchingRideScreen({super.key, this.searchingFor});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SearchingRideController>(
-      init: SearchingRideController(context: context),
+      init: SearchingRideController(context: context, searchingFor: searchingFor),
       builder: (controller) {
         return const Scaffold(body: SearchingRideBodyWidget());
       },

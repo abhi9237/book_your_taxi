@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:book_your_taxi/common/common_button.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
+import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'common_wheel_time_picker.dart';
 import 'common_widget.dart';
 
@@ -11,6 +13,7 @@ Future<void> openBookMiniBottomSheet(
   VoidCallback? onTapScheduleButton,
   VoidCallback? onTapPayment,
   VoidCallback? onTapBookNow,
+  VoidCallback? onTapBookForSelf,
 }) async {
   showModalBottomSheet(
     context: context,
@@ -133,6 +136,7 @@ Future<void> openBookMiniBottomSheet(
 
                 /// Book For
                 CommonShaderContainer(
+                  onTap: onTapBookForSelf,
                   child: Row(
                     children: [
                       Icon(Icons.person, color: ColorConstant.appColor),
@@ -208,38 +212,28 @@ Future<void> openRideFoundedBottomSheet(BuildContext context) async {
                 ),
               ),
               const SizedBox(height: 18),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorConstant.appColor.withValues(alpha: 0.12),
-                ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: ColorConstant.appColor,
-                  size: 44,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Ride Founded',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: ColorConstant.blackColor,
+                    ),
+                  ),
+                  Text(
+                    '5 min Away',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: ColorConstant.blackGreyColor.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 14),
-              const Text(
-                'Ride Founded',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: ColorConstant.blackColor,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Your ride has been confirmed and driver is on the way.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstant.blackGreyColor.withValues(alpha: 0.75),
-                ),
-              ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -271,7 +265,7 @@ Future<void> openRideFoundedBottomSheet(BuildContext context) async {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Rohit Sharma',
+                            'Jenny Wilson',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -280,7 +274,7 @@ Future<void> openRideFoundedBottomSheet(BuildContext context) async {
                           ),
                           SizedBox(height: 2),
                           Text(
-                            'White Swift • AB 1234',
+                            'Sedan (4 Seater)',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -290,22 +284,37 @@ Future<void> openRideFoundedBottomSheet(BuildContext context) async {
                         ],
                       ),
                     ),
-                    Text(
-                      '3 min',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: ColorConstant.appColor,
-                      ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '\$1.25/ per mile',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: ColorConstant.blackColor,
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'GR 678-UVW X',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: ColorConstant.blackGreyColor,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 20),
               CommonButton(
-                buttonText: 'Great',
+                buttonText: 'Request Ride',
                 onTap: () {
-                  Navigator.of(context).pop();
+                  context.pop();
+                  context.push(RouteConstant.searchingRide, extra: 'accept');
                 },
               ),
               const SizedBox(height: 8),

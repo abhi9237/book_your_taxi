@@ -4,12 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../common/common_bottom_sheet.dart';
+import 'home_controller.dart';
 
 
 class SearchingRideController extends GetxController {
   Timer? _timer;
   BuildContext? context;
-  SearchingRideController({this.context});
+  String? searchingFor;
+  SearchingRideController({this.context, this.searchingFor});
 
   void startRideSearchFlow(BuildContext context) {
     _timer?.cancel();
@@ -17,10 +19,16 @@ class SearchingRideController extends GetxController {
       if (!context.mounted) {
         return;
       }
-      // HomeController.openRideFoundedOnLoad = true;
-context.pop();
-context.pop();
-      // context.go(RouteConstant.bottomNav);
+      if (searchingFor == 'ride') {
+        // context.go(RouteConstant.bottomNav);
+        context.pop();
+        context.pop();
+        Future.delayed(const Duration(milliseconds: 500), () {
+          HomeController.showRideFoundedOnLoad.value = true;
+        });
+      } else {
+        context.pushReplacement(RouteConstant.congratulations);
+      }
     });
   }
 

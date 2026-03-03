@@ -12,6 +12,7 @@ import 'package:book_your_taxi/presentation/saved_places/saved_places.dart';
 import 'package:book_your_taxi/presentation/searching_ride/searching_ride.dart';
 import 'package:book_your_taxi/presentation/search_address/search_address.dart';
 import 'package:book_your_taxi/presentation/splash_screen/splash_screen.dart';
+import 'package:book_your_taxi/presentation/congratulations/congratulations_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/auth/complete_profile/complete_profile.dart';
@@ -142,7 +143,15 @@ abstract class AppRouter {
         path: RouteConstant.searchingRide,
         name: RouteConstant.searchingRide,
         builder: (context, state) {
-          return SearchingRideScreen();
+          final String? searchingFor = state.extra as String?;
+          return SearchingRideScreen(searchingFor: searchingFor);
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.congratulations,
+        name: RouteConstant.congratulations,
+        builder: (context, state) {
+          return CongratulationsScreen();
         },
       ),
     ],

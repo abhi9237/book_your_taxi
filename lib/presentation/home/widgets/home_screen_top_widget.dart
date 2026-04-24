@@ -9,102 +9,108 @@ class HomeScreenTopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: CommonMapTextFormFilled(
-            onTap: () {
-              controller.onTapSearchAddress(context);
-            },
-            hintText: 'Enter your location',
-            controller: controller.searchController.value,
-            suffixIcon: Icons.bookmark_add_outlined,
-            onTapSuffixIcon: () {
-              controller.onTapSavedPlaces(context);
-            },
-          ),
-        ),
-        Spacer(),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: 200,
-          width: MediaQuery.sizeOf(context).width,
-          decoration: BoxDecoration(
-            color: ColorConstant.whiteColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+    return Positioned(
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: CommonMapTextFormFilled(
+              onTap: () {
+                controller.onTapSearchAddress(context);
+              },
+              hintText: 'Enter your location',
+              controller: controller.searchController.value,
+              suffixIcon: Icons.bookmark_add_outlined,
+              onTapSuffixIcon: () {
+                controller.onTapSavedPlaces(context);
+              },
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 5),
-                  height: 4,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: ColorConstant.lightGreyColor.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                ),
+          Spacer(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            height: 200,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+              color: ColorConstant.whiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
-              SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Where to?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorConstant.blackColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    height: 4,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color: ColorConstant.lightGreyColor.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(40),
                     ),
                   ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Where to?',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: ColorConstant.blackColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
 
-                  Text(
-                    'MANAGE',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: ColorConstant.appColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                    Text(
+                      'MANAGE',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: ColorConstant.appColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              SizedBox(
-                height: 130,
-                child: ListView.builder(
-                  itemCount: controller.whereToGoList.length,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    var data = controller.whereToGoList[index];
-                    return HomeScreenWhereToWidget(
-                      icon: data['icon'],
-                      title: data['title'],
-                      subTitle: data['subTitle'],
-                      selectedIndex: controller.selectedIndex.value,
-                      index: index,
-                      onTap: () {
-                        controller.selectedIndex.value = index;
-                        controller.onTapWhereToGoTab(index,context);
-                      },
-                    );
-                  },
+                  ],
                 ),
-              ),
-            ],
+                SizedBox(height: 5),
+                SizedBox(
+                  height: 130,
+                  child: ListView.builder(
+                    itemCount: controller.whereToGoList.length,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var data = controller.whereToGoList[index];
+                      return HomeScreenWhereToWidget(
+                        icon: data['icon'],
+                        title: data['title'],
+                        subTitle: data['subTitle'],
+                        selectedIndex: controller.selectedIndex.value,
+                        index: index,
+                        onTap: () {
+                          controller.selectedIndex.value = index;
+                          controller.onTapWhereToGoTab(index,context);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

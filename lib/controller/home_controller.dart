@@ -31,27 +31,51 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getCurrentLocation();
+  }
 
-
-    // updateCamera();
+  void onTapTrackDriver(BuildContext context) async {
+    openDriverArrivingBottomSheet(
+      context,
+      isArrived: false,
+      onTapCancelRide: () async {
+        Navigator.of(context).pop();
+        await arrivedAtDestination(
+          context,
+          onTapPayCash: () {
+            Navigator.of(context).pop();
+            context.push(RouteConstant.payCash);
+          },
+        );
+      },
+    );
+    Future.delayed((Duration(seconds: 5)), () {
+      if (context.mounted) {
+        log('Print==>');
+        Navigator.of(context).pop();
+        openDriverArrivingBottomSheet(context, isArrived: true,
+            onTapCancelRide: (){
+              log('ddd');
+              arrivedAtDestination(context);
+            }
+        );
+      }
+    });
+    update();
   }
 
   void onTapWhereToGoTab(int index, BuildContext context) {
     if (index == 0) {
       context.push(RouteConstant.destination).then((v) {
-        log('yes');
         if (context.mounted) {
           openRideFoundedBottomSheet(
             context,
             onTap: () {
               context.pop();
-              context.push(RouteConstant.searchingRide, extra: 'accept').then((
-                value,
-              ) {
-                openDriverArrivingBottomSheet(context);
-              });
+              context.push(RouteConstant.searchingRide, extra: 'accept');
             },
           );
+
+
         }
       });
     }

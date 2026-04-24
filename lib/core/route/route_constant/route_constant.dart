@@ -19,4 +19,14 @@ class RouteConstant {
   static const String searchingRide = '/searchingRide';
   static const String congratulations = '/congratulations';
   static const String eReceipt = '/eReceipt';
+  static const String payCash = '/payCash';
+  static const String driverRating = '/driverRating';
+  static const String driverDetail = '/driverDetail';
+  static const String tipForDriver = '/tipForDriver';
+  static const String notification = '/notification';
+  static const String chatScreen = '/chatScreen';
+  static const String couponScreen = '/couponScreen';
+  static const String bookingsScreen = '/bookingsScreen';
+  static const String cancelTaxiBooking = '/cancelTaxiBooking';
+  static const String sosScreen = '/sosScreen';
 }

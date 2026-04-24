@@ -1,3 +1,5 @@
+import 'package:book_your_taxi/presentation/bookings/bookings_screen.dart';
+import 'package:book_your_taxi/presentation/chat_screen/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +11,8 @@ class BottomNavController extends GetxController {
   List<Widget> screenList = <Widget>[
     HomeScreen(),
     PaymentMethodsScreen(),
-    Container(),
-    Container(),
+    BookingsScreen(),
+    ChatScreen(),
     Container(),
   ];
 

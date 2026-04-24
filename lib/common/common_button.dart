@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../core/color_constant/color_constant.dart';
 
 class CommonButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback? onTap;
   final Color? textColor;
+  final double? width;
   final List<Color>? gradientColors;
   const CommonButton({
     super.key,
@@ -12,16 +14,18 @@ class CommonButton extends StatelessWidget {
     this.onTap,
     this.textColor,
     this.gradientColors,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      splashColor: Colors.transparent,
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
         height: 55,
-        width: MediaQuery.sizeOf(context).width,
+        width:width ?? MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: LinearGradient(

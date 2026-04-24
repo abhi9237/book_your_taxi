@@ -7,10 +7,12 @@ class CommonTextFormFilled extends StatelessWidget {
   final bool? isObscureIcon;
   final IconData? suffixIcon;
   final Widget? prefixIcon;
+  final Widget? suffixWidget;
   final VoidCallback? onTapSuffixIcon;
   final VoidCallback? onTapPrefixIcon;
   final int? maxLength;
   final TextInputType? keyBoardType;
+  final Color? hintTextColor;
 
   const CommonTextFormFilled({
     super.key,
@@ -23,6 +25,8 @@ class CommonTextFormFilled extends StatelessWidget {
     this.prefixIcon,
     this.maxLength,
     this.keyBoardType,
+    this.hintTextColor,
+    this.suffixWidget,
   });
 
   @override
@@ -40,9 +44,12 @@ class CommonTextFormFilled extends StatelessWidget {
         counterText: '',
         prefixIcon: prefixIcon,
         hintText: hintText,
-        suffixIcon: GestureDetector(
-          onTap: onTapSuffixIcon,
-          child: Icon(suffixIcon),
+        hintStyle: TextStyle(color: hintTextColor),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: 8, top: 3, bottom: 3),
+          child:
+              suffixWidget ??
+              GestureDetector(onTap: onTapSuffixIcon, child: Icon(suffixIcon)),
         ),
       ),
       validator: (v) {

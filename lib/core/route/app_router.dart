@@ -20,6 +20,12 @@ import 'package:book_your_taxi/presentation/chat_screen/chat_screen.dart';
 import 'package:book_your_taxi/presentation/coupon_screen/coupon_screen.dart';
 import 'package:book_your_taxi/presentation/bookings/bookings_screen.dart';
 import 'package:book_your_taxi/presentation/cancel_taxi_booking/cancel_taxi_booking_screen.dart';
+import 'package:book_your_taxi/presentation/profile_screen/profile_screen.dart';
+import 'package:book_your_taxi/presentation/your_profile_screen/your_profile_screen.dart';
+import 'package:book_your_taxi/presentation/manage_address_screen/manage_address_screen.dart';
+import 'package:book_your_taxi/presentation/add_address_screen/add_address_screen.dart';
+import 'package:book_your_taxi/presentation/settings_screen/settings_screen.dart';
+import 'package:book_your_taxi/presentation/wallet_screen/wallet_screen.dart';
 import 'package:book_your_taxi/presentation/sos_screen/sos_screen.dart';
 import 'package:book_your_taxi/presentation/notification/notification_screen.dart';
 import 'package:book_your_taxi/presentation/tip_for_driver/tip_for_driver.dart';
@@ -31,7 +37,7 @@ import '../../presentation/auth/get_started/get_started.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: RouteConstant.sosScreen,
+    initialLocation: RouteConstant.walletScreen,
 
     // redirect: (BuildContext context, GoRouterState state) async {
     //
@@ -240,6 +246,48 @@ abstract class AppRouter {
         name: RouteConstant.sosScreen,
         builder: (context, state) {
           return const SosScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.profileScreen,
+        name: RouteConstant.profileScreen,
+        builder: (context, state) {
+          return const ProfileScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.yourProfileScreen,
+        name: RouteConstant.yourProfileScreen,
+        builder: (context, state) {
+          return const YourProfileScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.manageAddressScreen,
+        name: RouteConstant.manageAddressScreen,
+        builder: (context, state) {
+          return const ManageAddressScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.settingsScreen,
+        name: RouteConstant.settingsScreen,
+        builder: (context, state) {
+          return const SettingsScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.addAddressScreen,
+        name: RouteConstant.addAddressScreen,
+        builder: (context, state) {
+          return const AddAddressScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.walletScreen,
+        name: RouteConstant.walletScreen,
+        builder: (context, state) {
+          return const WalletScreen();
         },
       ),
     ],

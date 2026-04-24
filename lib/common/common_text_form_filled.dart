@@ -11,6 +11,7 @@ class CommonTextFormFilled extends StatelessWidget {
   final VoidCallback? onTapSuffixIcon;
   final VoidCallback? onTapPrefixIcon;
   final int? maxLength;
+  final int? maxLines;
   final TextInputType? keyBoardType;
   final Color? hintTextColor;
 
@@ -24,6 +25,7 @@ class CommonTextFormFilled extends StatelessWidget {
     this.onTapPrefixIcon,
     this.prefixIcon,
     this.maxLength,
+    this.maxLines,
     this.keyBoardType,
     this.hintTextColor,
     this.suffixWidget,
@@ -33,6 +35,7 @@ class CommonTextFormFilled extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       maxLength: maxLength,
+      maxLines: maxLines,
       keyboardType: keyBoardType,
       style: TextStyle(color: ColorConstant.blackColor),
       onTapOutside: (v) {

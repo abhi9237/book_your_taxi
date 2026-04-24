@@ -29,4 +29,10 @@ class RouteConstant {
   static const String bookingsScreen = '/bookingsScreen';
   static const String cancelTaxiBooking = '/cancelTaxiBooking';
   static const String sosScreen = '/sosScreen';
+  static const String profileScreen = '/profileScreen';
+  static const String yourProfileScreen = '/yourProfileScreen';
+  static const String manageAddressScreen = '/manageAddressScreen';
+  static const String settingsScreen = '/settingsScreen';
+  static const String addAddressScreen = '/addAddressScreen';
+  static const String walletScreen = '/walletScreen';
 }

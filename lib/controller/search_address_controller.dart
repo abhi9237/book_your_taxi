@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/common/place_model.dart';
-import '../presentation/search_address/repo/search_repository.dart';
+import '../presentation/passenger/search_address/repo/search_repository.dart';
 
 class SearchAddressController extends GetxController {
   Rx<TextEditingController> searchController = TextEditingController().obs;

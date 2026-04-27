@@ -1,12 +1,14 @@
 import 'dart:developer';
-
 import 'package:book_your_taxi/core/image_constant/image_constant.dart';
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../common/common_methods.dart';
+import '../presentation/passenger/auth/signUp_screen/sign_up_repo/sign_up_repository.dart';
 
 class AuthController extends GetxController {
+  final SignUpRepository _signUpRepository = SignUpRepository();
   final PageController pageController = PageController();
   final Rx<TextEditingController> emailController = TextEditingController().obs;
   final Rx<TextEditingController> passwordController =
@@ -57,7 +59,7 @@ class AuthController extends GetxController {
     context.pop();
   }
 
-  void onTapVerifyButton(){
+  void onTapVerifyButton() {
     context.push(RouteConstant.locationAccess);
   }
 
@@ -95,7 +97,7 @@ class AuthController extends GetxController {
     context.push(RouteConstant.signUp);
   }
 
-  void onTapAllowLocationAccess(BuildContext context){
+  void onTapAllowLocationAccess(BuildContext context) {
     context.push(RouteConstant.bottomNav);
   }
 
@@ -122,7 +124,33 @@ class AuthController extends GetxController {
     }
   }
 
-  void onTapSignUpButton() {
-    context.push(RouteConstant.completeProfile);
+  void onTapSignUpButton() async {
+    if (nameController.value.text.trim().isEmpty) {
+      showToastMessage(
+        isError: true,
+        context: context,
+        titleMessage: 'Error',
+        message: 'Please enter your name',
+      );
+    } else if (!isValidEmail(emailController.value.text.trim()) ||
+        emailController.value.text.trim().isEmpty) {
+      showToastMessage(
+        isError: true,
+        context: context,
+        titleMessage: 'Error',
+        message: 'Please enter your valid email',
+      );
+    } else if (passwordController.value.text.trim().isEmpty ||
+        passwordController.value.text.trim().length < 6) {
+      showToastMessage(
+        isError: true,
+        context: context,
+        titleMessage: 'Error',
+        message: 'Please enter password with at least 6 characters',
+      );
+    } else {
+      await _signUpRepository.sendOtpVerification(emailController.value.text);
+      // context.push(RouteConstant.completeProfile);
+    }
   }
 }

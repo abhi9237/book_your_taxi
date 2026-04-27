@@ -33,6 +33,7 @@ class RouteConstant {
   static const String yourProfileScreen = '/yourProfileScreen';
   static const String manageAddressScreen = '/manageAddressScreen';
   static const String settingsScreen = '/settingsScreen';
+  static const String helpCentreScreen = '/helpCentreScreen';
   static const String addAddressScreen = '/addAddressScreen';
   static const String walletScreen = '/walletScreen';
 }

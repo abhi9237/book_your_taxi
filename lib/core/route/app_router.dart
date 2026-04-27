@@ -1,43 +1,44 @@
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
-import 'package:book_your_taxi/presentation/auth/location_access/location_access.dart';
-import 'package:book_your_taxi/presentation/auth/login_screen/login_ui.dart';
-import 'package:book_your_taxi/presentation/auth/onBoardingPages/on_boarding_pages.dart';
-import 'package:book_your_taxi/presentation/auth/signUp_screen/sign_up_screen.dart';
-import 'package:book_your_taxi/presentation/auth/verify_code/verify_code.dart';
-import 'package:book_your_taxi/presentation/bottom_nav/bottom_nav_screen.dart';
-import 'package:book_your_taxi/presentation/destination/destination.dart';
-import 'package:book_your_taxi/presentation/driver_detail/driver_detail.dart';
-import 'package:book_your_taxi/presentation/driver_rating/driver_rating.dart';
-import 'package:book_your_taxi/presentation/pay_cash/pay_cash.dart';
-import 'package:book_your_taxi/presentation/payment_methods/payment_methods.dart';
-import 'package:book_your_taxi/presentation/saved_places/saved_places.dart';
-import 'package:book_your_taxi/presentation/searching_ride/searching_ride.dart';
-import 'package:book_your_taxi/presentation/search_address/search_address.dart';
-import 'package:book_your_taxi/presentation/splash_screen/splash_screen.dart';
-import 'package:book_your_taxi/presentation/congratulations/congratulations_screen.dart';
-import 'package:book_your_taxi/presentation/e_receipt/e_receipt_screen.dart';
-import 'package:book_your_taxi/presentation/chat_screen/chat_screen.dart';
-import 'package:book_your_taxi/presentation/coupon_screen/coupon_screen.dart';
-import 'package:book_your_taxi/presentation/bookings/bookings_screen.dart';
-import 'package:book_your_taxi/presentation/cancel_taxi_booking/cancel_taxi_booking_screen.dart';
-import 'package:book_your_taxi/presentation/profile_screen/profile_screen.dart';
-import 'package:book_your_taxi/presentation/your_profile_screen/your_profile_screen.dart';
-import 'package:book_your_taxi/presentation/manage_address_screen/manage_address_screen.dart';
-import 'package:book_your_taxi/presentation/add_address_screen/add_address_screen.dart';
-import 'package:book_your_taxi/presentation/settings_screen/settings_screen.dart';
-import 'package:book_your_taxi/presentation/wallet_screen/wallet_screen.dart';
-import 'package:book_your_taxi/presentation/sos_screen/sos_screen.dart';
-import 'package:book_your_taxi/presentation/notification/notification_screen.dart';
-import 'package:book_your_taxi/presentation/tip_for_driver/tip_for_driver.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/location_access/location_access.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/login_screen/login_ui.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/onBoardingPages/on_boarding_pages.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/signUp_screen/sign_up_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/verify_code/verify_code.dart';
+import 'package:book_your_taxi/presentation/passenger/bottom_nav/bottom_nav_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/destination/destination.dart';
+import 'package:book_your_taxi/presentation/passenger/driver_detail/driver_detail.dart';
+import 'package:book_your_taxi/presentation/passenger/driver_rating/driver_rating.dart';
+import 'package:book_your_taxi/presentation/passenger/pay_cash/pay_cash.dart';
+import 'package:book_your_taxi/presentation/passenger/payment_methods/payment_methods.dart';
+import 'package:book_your_taxi/presentation/passenger/saved_places/saved_places.dart';
+import 'package:book_your_taxi/presentation/passenger/searching_ride/searching_ride.dart';
+import 'package:book_your_taxi/presentation/passenger/search_address/search_address.dart';
+import 'package:book_your_taxi/presentation/passenger/splash_screen/splash_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/congratulations/congratulations_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/e_receipt/e_receipt_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/chat_screen/chat_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/coupon_screen/coupon_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/bookings/bookings_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/cancel_taxi_booking/cancel_taxi_booking_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/profile_screen/profile_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/help_centre/help_centre.dart';
+import 'package:book_your_taxi/presentation/passenger/your_profile_screen/your_profile_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/manage_address_screen/manage_address_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/add_address_screen/add_address_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/settings_screen/settings_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/wallet_screen/wallet_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/sos_screen/sos_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/notification/notification_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/tip_for_driver/tip_for_driver.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/add_card/add_card.dart';
-import '../../presentation/auth/complete_profile/complete_profile.dart';
-import '../../presentation/auth/get_started/get_started.dart';
+import '../../presentation/passenger/add_card/add_card.dart';
+import '../../presentation/passenger/auth/complete_profile/complete_profile.dart';
+import '../../presentation/passenger/auth/get_started/get_started.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
-    initialLocation: RouteConstant.walletScreen,
+    initialLocation: RouteConstant.splash,
 
     // redirect: (BuildContext context, GoRouterState state) async {
     //
@@ -274,6 +275,13 @@ abstract class AppRouter {
         name: RouteConstant.settingsScreen,
         builder: (context, state) {
           return const SettingsScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.helpCentreScreen,
+        name: RouteConstant.helpCentreScreen,
+        builder: (context, state) {
+          return const HelpCentreScreen();
         },
       ),
       GoRoute(

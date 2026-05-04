@@ -34,9 +34,11 @@ import 'package:book_your_taxi/presentation/passenger/notification/notification_
 import 'package:book_your_taxi/presentation/passenger/tip_for_driver/tip_for_driver.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/driver/upload_profile_picture/upload_profile_picture_screen.dart';
 import '../../presentation/passenger/add_card/add_card.dart';
 import '../../presentation/passenger/auth/complete_profile/complete_profile.dart';
 import '../../presentation/passenger/auth/get_started/get_started.dart';
+import '../../presentation/driver/verification_required_steps/verification_required_steps.dart';
 import '../../presentation/user_role_selection/user_role_selection_screen.dart';
 
 abstract class AppRouter {
@@ -74,6 +76,20 @@ abstract class AppRouter {
         name: RouteConstant.getStarted,
         builder: (context, state) {
           return GetStartedScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.verificationRequiredSteps,
+        name: RouteConstant.verificationRequiredSteps,
+        builder: (context, state) {
+          return const VerificationRequiredStepsScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.uploadProfilePicture,
+        name: RouteConstant.uploadProfilePicture,
+        builder: (context, state) {
+          return const UploadProfilePictureScreen();
         },
       ),
       GoRoute(

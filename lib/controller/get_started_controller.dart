@@ -34,10 +34,9 @@ class GetStartedController extends GetxController {
         RouteConstant.onBoardingPages,
         extra: selectedUserRole.value,
       );
-      // context.push(RouteConstant.driverSignUp, extra: selectedUserRole.value);
     }
-
   }
+
   void selectUserRole(String role) {
     selectedUserRole.value = role;
     update();

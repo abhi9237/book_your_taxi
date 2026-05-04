@@ -4,6 +4,8 @@ class RouteConstant {
   static const String dashboard = '/dashboard';
   static const String login = '/login';
   static const String getStarted = '/getStarted';
+  static const String verificationRequiredSteps = '/verificationRequiredSteps';
+  static const String uploadProfilePicture = '/uploadProfilePicture';
   static const String onBoardingPages = '/onBoardingPages';
   static const String otpVerification = '/otpVerification';
   static const String completeProfile = '/completeProfile';

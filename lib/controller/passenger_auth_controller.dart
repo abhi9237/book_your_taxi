@@ -72,21 +72,21 @@ class PassengerAuthController extends GetxController {
       "title": "Get Onboarded and Start",
       "subtitle": " Accepting Rides Instantly!",
       "desc":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "image": ImageConstant.onBoarding1,
     },
     {
       "title": "Effortless Monitor Your",
       "subtitle": " Booking Schedule",
       "desc":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "image": ImageConstant.onBoarding2,
     },
     {
       "title": "Keep Tabs on",
       "subtitle": " Your Earnings with Ease",
       "desc":
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "image": ImageConstant.onBoarding3,
     },
   ];
@@ -227,7 +227,11 @@ class PassengerAuthController extends GetxController {
   }
 
   void onTapCompleteProfileButton() {
-    context.push(RouteConstant.locationAccess);
+    if (selectedUserRole == 'passenger') {
+      context.push(RouteConstant.locationAccess);
+    } else {
+      context.push(RouteConstant.verificationRequiredSteps);
+    }
   }
 
   void onTapSignUp(BuildContext context) {

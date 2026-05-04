@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../core/color_constant/color_constant.dart';
 
@@ -7,6 +6,7 @@ class CommonButton extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? textColor;
   final double? width;
+  final double? height;
   final List<Color>? gradientColors;
   const CommonButton({
     super.key,
@@ -15,6 +15,7 @@ class CommonButton extends StatelessWidget {
     this.textColor,
     this.gradientColors,
     this.width,
+    this.height,
   });
 
   @override
@@ -24,7 +25,7 @@ class CommonButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
-        height: 55,
+        height: height ?? 55,
         width:width ?? MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),

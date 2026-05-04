@@ -10,16 +10,19 @@ class SignUpRepository {
   DbService service = DbService();
   final _auth = Get.find<SupabaseClient>().auth;
 
-  Future<void> sendOtpVerification(String email) async {
-    try {
-      ResendResponse response =  await _auth.resend(
-        type: OtpType.signup,
-        email: email,
-      );
+  Future sendEmailVerification(String email) async {
+    final response = await _auth.signInWithOtp(
+      email: email,
+      shouldCreateUser: true,
+    );
+    return response;
+  }
 
-      log('Don${response.messageId ??''}');
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+  Future<List<Map<String, dynamic>>> completeUserProfile(
+    String email,
+    Map<String, dynamic> data,
+  ) async {
+    final response = await service.addUser(dbName: 'users', data: data);
+    return response;
   }
 }

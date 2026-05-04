@@ -14,6 +14,8 @@ class CommonTextFormFilled extends StatelessWidget {
   final int? maxLines;
   final TextInputType? keyBoardType;
   final Color? hintTextColor;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   const CommonTextFormFilled({
     super.key,
@@ -29,11 +31,15 @@ class CommonTextFormFilled extends StatelessWidget {
     this.keyBoardType,
     this.hintTextColor,
     this.suffixWidget,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
+      onTap: onTap,
       maxLength: maxLength,
       maxLines: maxLines,
       keyboardType: keyBoardType,
@@ -100,6 +106,7 @@ class CommonMapTextFormFilled extends StatelessWidget {
   final int? maxLength;
   final TextInputType? keyBoardType;
   final Color? fillColor;
+  final bool readOnly;
 
   const CommonMapTextFormFilled({
     super.key,
@@ -115,6 +122,7 @@ class CommonMapTextFormFilled extends StatelessWidget {
     this.keyBoardType,
     this.fillColor,
     this.onChangeText,
+    this.readOnly = false,
   });
 
   @override
@@ -122,6 +130,7 @@ class CommonMapTextFormFilled extends StatelessWidget {
     return TextFormField(
       onChanged: onChangeText,
       onTap: onTap,
+      readOnly: readOnly,
       maxLength: maxLength,
       keyboardType: keyBoardType,
       style: TextStyle(color: ColorConstant.blackColor),

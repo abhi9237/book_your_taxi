@@ -1,13 +1,15 @@
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> showToastMessage({
   required String titleMessage,
   required String message,
   required BuildContext context,
   required bool isError,
-}) async {
+}) async
+{
   toastification.show(
     context: context,
     type: isError ? ToastificationType.error : ToastificationType.success,
@@ -81,4 +83,60 @@ bool isValidEmail(String email) {
     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
   );
   return emailRegex.hasMatch(email);
+}
+
+Future<void> onTapOpenEmailApp(String email,BuildContext context) async {
+  final trimmedEmail = email.trim();
+
+  if (trimmedEmail.isEmpty || !isValidEmail(trimmedEmail)) {
+    showToastMessage(
+      isError: true,
+      context: context,
+      titleMessage: 'Error',
+      message: 'Please enter a valid email address',
+    );
+    return;
+  }
+
+  final Uri mailToUri = Uri(
+    scheme: 'mailto',
+    path: trimmedEmail,
+    queryParameters: <String, String>{
+      'subject': 'Verify your email',
+      'body': 'Please verify this email address: $trimmedEmail',
+    },
+  );
+
+  final bool openedMailApp = await launchUrl(
+    mailToUri,
+    mode: LaunchMode.externalApplication,
+  );
+
+  if (openedMailApp) {
+    return;
+  }
+
+  final Uri gmailUri = Uri.parse(
+    'https://mail.google.com/mail/?view=cm&fs=1&to=${Uri.encodeComponent(trimmedEmail)}&su=${Uri.encodeComponent('Verify your email')}&body=${Uri.encodeComponent('Please verify this email address: $trimmedEmail')}',
+  );
+
+  final Uri outlookUri = Uri.parse(
+    'https://outlook.live.com/mail/0/deeplink/compose?to=${Uri.encodeComponent(trimmedEmail)}&subject=${Uri.encodeComponent('Verify your email')}&body=${Uri.encodeComponent('Please verify this email address: $trimmedEmail')}',
+  );
+
+  if (await launchUrl(gmailUri, mode: LaunchMode.externalApplication) ||
+      await launchUrl(outlookUri, mode: LaunchMode.externalApplication)) {
+    return;
+  }
+
+  if (!context.mounted) {
+    return;
+  }
+
+  showToastMessage(
+    isError: true,
+    context: context,
+    titleMessage: 'Unable to open mail app',
+    message: 'Try again or open your email manually for $trimmedEmail',
+  );
 }

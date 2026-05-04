@@ -1,15 +1,16 @@
-import 'package:book_your_taxi/controller/auth_controller.dart';
+import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../common/common_button.dart';
+import '../../../../../controller/get_started_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
-import '../../../../../core/localisation/string_constant/string_constant.dart';
 import '../../../../../core/localisation/string_constant/string_constant_key.dart';
 
 class GetStartedTopWidget extends StatelessWidget {
-  final AuthController controller;
+  final GetStartedController controller;
   const GetStartedTopWidget({super.key, required this.controller});
 
   @override
@@ -30,7 +31,11 @@ class GetStartedTopWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: AppStringConstant.welcomeToYour.tr,
-                style: TextStyle(color: ColorConstant.blackColor, fontSize: 26,fontWeight: FontWeight.w700),
+                style: TextStyle(
+                  color: ColorConstant.blackColor,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                ),
                 children: [
                   TextSpan(
                     text: AppStringConstant.ultimateTransportationSolution.tr,
@@ -55,9 +60,12 @@ class GetStartedTopWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            CommonButton(buttonText: AppStringConstant.letsGetStarted.tr,onTap: (){
-              controller.onTapGetStarted(context);
-            },),
+            CommonButton(
+              buttonText: AppStringConstant.letsGetStarted.tr,
+              onTap: () {
+                controller.onTapGetStarted(context);
+              },
+            ),
             SizedBox(height: 20),
             RichText(
               text: TextSpan(
@@ -73,7 +81,7 @@ class GetStartedTopWidget extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        // Navigate to Sign In screen
+                        context.push(RouteConstant.login);
                       },
                   ),
                 ],

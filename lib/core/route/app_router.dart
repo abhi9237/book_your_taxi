@@ -3,11 +3,13 @@ import 'package:book_your_taxi/presentation/passenger/auth/location_access/locat
 import 'package:book_your_taxi/presentation/passenger/auth/login_screen/login_ui.dart';
 import 'package:book_your_taxi/presentation/passenger/auth/onBoardingPages/on_boarding_pages.dart';
 import 'package:book_your_taxi/presentation/passenger/auth/signUp_screen/sign_up_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/auth/verify_email/verify_email.dart';
 import 'package:book_your_taxi/presentation/passenger/auth/verify_code/verify_code.dart';
 import 'package:book_your_taxi/presentation/passenger/bottom_nav/bottom_nav_screen.dart';
 import 'package:book_your_taxi/presentation/passenger/destination/destination.dart';
 import 'package:book_your_taxi/presentation/passenger/driver_detail/driver_detail.dart';
 import 'package:book_your_taxi/presentation/passenger/driver_rating/driver_rating.dart';
+import 'package:book_your_taxi/presentation/passenger/home_new_screen/home_new_screen.dart';
 import 'package:book_your_taxi/presentation/passenger/pay_cash/pay_cash.dart';
 import 'package:book_your_taxi/presentation/passenger/payment_methods/payment_methods.dart';
 import 'package:book_your_taxi/presentation/passenger/saved_places/saved_places.dart';
@@ -35,6 +37,7 @@ import 'package:go_router/go_router.dart';
 import '../../presentation/passenger/add_card/add_card.dart';
 import '../../presentation/passenger/auth/complete_profile/complete_profile.dart';
 import '../../presentation/passenger/auth/get_started/get_started.dart';
+import '../../presentation/user_role_selection/user_role_selection_screen.dart';
 
 abstract class AppRouter {
   static GoRouter router = GoRouter(
@@ -77,7 +80,8 @@ abstract class AppRouter {
         path: RouteConstant.onBoardingPages,
         name: RouteConstant.onBoardingPages,
         builder: (context, state) {
-          return OnBoardingPages();
+          final String userSelection = state.extra as String? ?? '';
+          return OnBoardingPages(selectedUserRole: userSelection);
         },
       ),
       GoRoute(
@@ -95,6 +99,14 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: RouteConstant.verifyEmail,
+        name: RouteConstant.verifyEmail,
+        builder: (context, state) {
+          final String email = state.extra as String? ?? '';
+          return VerifyEmailScreen(email: email);
+        },
+      ),
+      GoRoute(
         path: RouteConstant.completeProfile,
         name: RouteConstant.completeProfile,
         builder: (context, state) {
@@ -105,7 +117,8 @@ abstract class AppRouter {
         path: RouteConstant.verifyOtp,
         name: RouteConstant.verifyOtp,
         builder: (context, state) {
-          return VerifyCodeScreen();
+          final String email = state.extra as String? ?? '';
+          return VerifyCodeScreen(email: email);
         },
       ),
       GoRoute(
@@ -116,10 +129,24 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: RouteConstant.authSelection,
+        name: RouteConstant.authSelection,
+        builder: (context, state) {
+          return const UserRoleSelectionScreen();
+        },
+      ),
+      GoRoute(
         path: RouteConstant.bottomNav,
         name: RouteConstant.bottomNav,
         builder: (context, state) {
           return BottomNavScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.homeNewScreen,
+        name: RouteConstant.homeNewScreen,
+        builder: (context, state) {
+          return const HomeNewScreen();
         },
       ),
       GoRoute(

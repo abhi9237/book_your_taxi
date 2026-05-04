@@ -1,5 +1,5 @@
 import 'package:book_your_taxi/common/common_button.dart';
-import 'package:book_your_taxi/controller/auth_controller.dart';
+import 'package:book_your_taxi/controller/location_controller.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/presentation/passenger/auth/location_access/widgets/location_enabled_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ class LocationAccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(
-      init: AuthController(context: context),
+    return GetBuilder<LocationController>(
+      init: LocationController(context: context),
       builder: (controller) {
         return Scaffold(
           bottomNavigationBar: Container(
@@ -33,8 +33,8 @@ class LocationAccessScreen extends StatelessWidget {
               children: [
                 CommonButton(
                   buttonText: 'Allow Location Access',
-                  onTap: () {
-                    controller.onTapAllowLocationAccess(context);
+                  onTap: () async {
+                    await controller.onTapAllowLocationAccess();
                   },
                 ),
                 SizedBox(height: 10),

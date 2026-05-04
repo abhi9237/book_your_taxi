@@ -2,12 +2,11 @@ import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/core/icons/app_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-
 import '../../../../../common/common_button.dart';
-import '../../../../../controller/auth_controller.dart';
+import '../../../../../controller/passenger_auth_controller.dart';
 
 class LoginScreenButtonWidget extends StatelessWidget {
-  final AuthController controller;
+  final PassengerAuthController controller;
   const LoginScreenButtonWidget({super.key, required this.controller});
 
   @override
@@ -17,7 +16,12 @@ class LoginScreenButtonWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 30),
-          CommonButton(buttonText: "Sign In", onTap: () {}),
+          CommonButton(
+            buttonText: "Sign In",
+            onTap: () {
+              controller.onTapSignIn(isComingRegister: false);
+            },
+          ),
           SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -84,7 +88,9 @@ class LoginScreenButtonWidget extends StatelessWidget {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      controller.onTapSignUp();
+                      controller.onTapSignUp(
+                        context
+                      );
                     },
                 ),
               ],

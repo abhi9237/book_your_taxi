@@ -1,11 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../common/common_text_form_filled.dart';
-import '../../../../../controller/auth_controller.dart';
+import '../../../../../controller/passenger_auth_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
+import 'bottom_sheets/complete_profile_country_code_bottom_sheet.dart';
+import 'bottom_sheets/complete_profile_gender_bottom_sheet.dart';
 
 class CompleteProfileTextFilledWidget extends StatelessWidget {
-  final AuthController controller;
+  final PassengerAuthController controller;
   const CompleteProfileTextFilledWidget({super.key, required this.controller});
 
   @override
@@ -25,6 +27,21 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
         ),
         CommonTextFormFilled(
           hintText: 'Enter your name',
+          controller: controller.nameController.value,
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Email',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            color: ColorConstant.blackColor,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        CommonTextFormFilled(
+          readOnly: true,
+          hintText: 'Enter your email',
           controller: controller.emailController.value,
         ),
         SizedBox(height: 10),
@@ -40,7 +57,9 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
         CommonTextFormFilled(
           keyBoardType: TextInputType.number,
           prefixIcon: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              openCompleteProfileCountryCodeBottomSheet(context, controller);
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
@@ -53,7 +72,7 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
                     size: 20,
                   ),
                   Text(
-                    '+91',
+                    controller.selectedCountryCode.value,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -72,7 +91,7 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
             ),
           ),
           hintText: 'Enter your phone number',
-          controller: controller.emailController.value,
+          controller: controller.completeProfilePhoneController.value,
           maxLength: 10,
         ),
         SizedBox(height: 10),
@@ -86,13 +105,77 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
           ),
         ),
         CommonTextFormFilled(
-          maxLines: 1,
-          isObscureIcon: controller.isObsecureValue.value,
-          onTapSuffixIcon: controller.onClickEyeIcon,
+          onTap: () {
+            openCompleteProfileGenderBottomSheet(context, controller);
+          },
           suffixIcon: Icons.arrow_drop_down_sharp,
-
           hintText: 'Select',
-          controller: controller.passwordController.value,
+          controller: controller.completeProfileGenderController.value,
+          readOnly: true,
+        ),
+        if (controller.selectedUserRole == 'driver')
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10),
+              Text(
+                'City You Drive in',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: ColorConstant.blackColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 10),
+              CommonTextFormFilled(
+                onTap: () {},
+                suffixIcon: Icons.arrow_drop_down_sharp,
+                hintText: 'City',
+                controller: controller.completeProfileGenderController.value,
+                readOnly: true,
+              ),
+            ],
+          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              activeColor: ColorConstant.appColor,
+              value: controller.isChecked,
+              onChanged: (v) {
+                controller.onTapAgreeTermsCondition(v ?? false);
+              },
+            ),
+
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: "By Accept, you agree to Company ",
+                style: TextStyle(
+                  color: ColorConstant.blackColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Terms & Conditions',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: ColorConstant.appColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        controller.onTapSignUp(context);
+                      },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );

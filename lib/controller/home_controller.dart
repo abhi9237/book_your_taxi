@@ -30,7 +30,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCurrentLocation();
+    // getCurrentLocation();
   }
 
   void onTapTrackDriver(BuildContext context) async {
@@ -120,22 +120,5 @@ class HomeController extends GetxController {
     );
   }
 
-  Future<void> getCurrentLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return;
-    }
-    Position position = await Geolocator.getCurrentPosition();
-    currentLocation.value = LatLng(position.latitude, position.longitude);
-    getAddress(currentLocation.value.latitude, currentLocation.value.longitude);
-    updateCamera();
-    update();
-
-    log('currentLocation.value==> ${currentLocation.value}');
-  }
 }

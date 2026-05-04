@@ -5,6 +5,7 @@ import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/core/icons/app_icons.dart';
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'common_wheel_time_picker.dart';
 import 'common_widget.dart';
@@ -316,6 +317,101 @@ Future<void> openRideFoundedBottomSheet(
               CommonButton(buttonText: 'Request Ride', onTap: onTap),
               const SizedBox(height: 8),
             ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future<void> openLocationPermissionDeniedBottomSheet(
+  BuildContext context,
+) {
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: ColorConstant.whiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 3,
+                  width: MediaQuery.sizeOf(context).width * 0.2,
+                  decoration: BoxDecoration(
+                    color: ColorConstant.lightGreyColor.withValues(alpha: 0.45),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(height: 22),
+                Container(
+                  height: 72,
+                  width: 72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorConstant.appColor.withValues(alpha: 0.12),
+                  ),
+                  child: const Icon(
+                    Icons.location_off_rounded,
+                    color: ColorConstant.appColor,
+                    size: 34,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Text(
+                  'Location Permission Needed',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: ColorConstant.blackColor,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Location access has been permanently denied. Please open app settings and allow location permission to continue using nearby ride features.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                    color: ColorConstant.blackGreyColor.withValues(alpha: 0.75),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                CommonButton(
+                  buttonText: 'Open App Settings',
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    await Geolocator.openAppSettings();
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text(
+                    'Not now',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: ColorConstant.blackGreyColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+              ],
+            ),
           ),
         ),
       );

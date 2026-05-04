@@ -8,9 +8,11 @@ class RouteConstant {
   static const String otpVerification = '/otpVerification';
   static const String completeProfile = '/completeProfile';
   static const String signUp = '/signUp';
+  static const String verifyEmail = '/verifyEmail';
   static const String verifyOtp = '/verifyOtp';
   static const String locationAccess = '/locationAccess';
   static const String bottomNav = '/bottomNav';
+  static const String homeNewScreen = '/homeNewScreen';
   static const String savedPlaces = '/savedPlaces';
   static const String searchAddress = '/searchAddress';
   static const String destination = '/destination';

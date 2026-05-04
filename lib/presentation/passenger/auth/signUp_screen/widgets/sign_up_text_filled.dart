@@ -1,10 +1,10 @@
-import 'package:book_your_taxi/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../../../common/common_text_form_filled.dart';
+import '../../../../../controller/passenger_auth_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
 
 class SignUpTextFilled extends StatelessWidget {
-  final AuthController controller;
+  final PassengerAuthController controller;
   const SignUpTextFilled({super.key, required this.controller});
 
   @override

@@ -7,11 +7,15 @@ class DbService implements DbRepository {
   final SupabaseClient client = Get.find<SupabaseClient>();
 
   @override
-  Future<void> addUser({
+  Future<List<Map<String, dynamic>>> addUser({
     required String dbName,
     Map<String, dynamic>? data,
   }) async {
-    await client.from(dbName).insert(data ?? {});
+    final response = await client
+        .from(dbName)
+        .insert(data ?? {})
+        .select();
+    return response;
   }
 
   @override

@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-
-import '../../../../../controller/auth_controller.dart';
+import '../../../../../controller/passenger_auth_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
+import 'bottom_sheets/complete_profile_image_bottom_sheet.dart';
 
 class CompleteProfileTopWidget extends StatelessWidget {
-  final AuthController controller;
+  final PassengerAuthController controller;
   const CompleteProfileTopWidget({super.key, required this.controller});
 
   @override
@@ -50,41 +51,65 @@ class CompleteProfileTopWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
+        if(controller.selectedUserRole == 'passenger')
         Stack(
           children: [
-            Container(
-              height: 120,
-              width: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
-              ),
-              child: Icon(
-                Icons.person,
-                size: 50,
-                color: ColorConstant.lightGreyColor,
+            GestureDetector(
+              onTap: () {
+                openCompleteProfileImageBottomSheet(context, controller);
+              },
+              child: Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
+                  border: Border.all(
+                    color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
+                  ),
+                  image: controller.profileImage.value != null
+                      ? DecorationImage(
+                          image: FileImage(
+                            File(controller.profileImage.value!.path),
+                          ),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: controller.profileImage.value == null
+                    ? const Icon(
+                        Icons.person,
+                        size: 50,
+                        color: ColorConstant.lightGreyColor,
+                      )
+                    : null,
               ),
             ),
 
             Positioned(
               bottom: 0,
               right: 10,
-              child: Container(
-                padding: EdgeInsets.all(5),
-
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorConstant.appColor,
-                ),
-                child: Icon(
-                  Icons.edit,
-                  size: 18,
-                  color: ColorConstant.whiteColor,
+              child: GestureDetector(
+                onTap: () {
+                  openCompleteProfileImageBottomSheet(context, controller);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorConstant.appColor,
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    size: 18,
+                    color: ColorConstant.whiteColor,
+                  ),
                 ),
               ),
             ),
           ],
         ),
+        if(controller.selectedUserRole == 'passenger')
         SizedBox(height: 20),
       ],
     );

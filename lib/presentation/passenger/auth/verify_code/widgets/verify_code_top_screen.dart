@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import '../../../../../controller/passenger_auth_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
 
 class VerifyCodeTopScreen extends StatelessWidget {
-  const VerifyCodeTopScreen({super.key});
+
+  final PassengerAuthController controller;
+  const VerifyCodeTopScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class VerifyCodeTopScreen extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: GestureDetector(
             onTap: () {
-              // controller.onTabBackButton(context);
+             controller.onTabBackButton(context);
             },
             child: Container(
               height: 40,
@@ -47,7 +49,7 @@ class VerifyCodeTopScreen extends StatelessWidget {
           ),
         ),
         Text(
-          "emaple@gmail.com",
+          controller.emailController.value.text,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,

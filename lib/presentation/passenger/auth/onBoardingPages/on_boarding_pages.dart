@@ -1,28 +1,33 @@
-import 'package:book_your_taxi/controller/auth_controller.dart';
 import 'package:book_your_taxi/core/icons/app_icons.dart';
-import 'package:book_your_taxi/core/image_constant/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-
 import '../../../../common/common_button.dart';
+import '../../../../controller/passenger_auth_controller.dart';
 import '../../../../core/color_constant/color_constant.dart';
 
 class OnBoardingPages extends StatelessWidget {
-  const OnBoardingPages({super.key});
+  final String? selectedUserRole;
+  const OnBoardingPages({super.key, required this.selectedUserRole});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(
-      init: AuthController(context: context),
+    return GetBuilder<PassengerAuthController>(
+      init: PassengerAuthController(
+        context: context,
+        selectedUserRole: selectedUserRole,
+      ),
       builder: (controller) {
         return Scaffold(
           body: Stack(
             children: [
               PageView.builder(
                 controller: controller.pageController,
-                itemCount: controller.pages.length,
+                itemCount: controller.passengerPages.length,
                 onPageChanged: controller.onBoardingPageSelection,
                 itemBuilder: (context, index) {
+                  Map<String, String> data = selectedUserRole == 'passenger'
+                      ? controller.passengerPages[index]
+                      : controller.driverPages[index];
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -32,7 +37,7 @@ class OnBoardingPages extends StatelessWidget {
                           bottomLeft: Radius.circular(25),
                         ),
                         child: Image.asset(
-                          controller.pages[index]["image"]!,
+                          data["image"]!,
                           height: 550,
                           width: MediaQuery.sizeOf(context).width,
                           fit: BoxFit.cover,
@@ -47,7 +52,7 @@ class OnBoardingPages extends StatelessWidget {
                             RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                text: controller.pages[index]["title"] ?? '',
+                                text: data["title"] ?? '',
                                 style: TextStyle(
                                   color: ColorConstant.blackColor,
                                   fontSize: 26,
@@ -55,9 +60,7 @@ class OnBoardingPages extends StatelessWidget {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text:
-                                        controller.pages[index]["subtitle"] ??
-                                        '',
+                                    text: data["subtitle"] ?? '',
                                     style: TextStyle(
                                       color: ColorConstant.appColor,
                                       fontSize: 26,
@@ -71,7 +74,7 @@ class OnBoardingPages extends StatelessWidget {
                             const SizedBox(height: 20),
 
                             Text(
-                              controller.pages[index]["desc"]!,
+                              data["desc"]!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,
@@ -97,7 +100,7 @@ class OnBoardingPages extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                        controller.pages.length,
+                        controller.passengerPages.length,
                         (index) => AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -120,14 +123,14 @@ class OnBoardingPages extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        controller.currentIndex.value > 0?
-
-                        CommonCircularButton(
-                          onTap: () {
-                            controller.backwardToPreviousPage();
-                          },
-                          iconImg: AppIcons.moveBackward,
-                        ):SizedBox(),
+                        controller.currentIndex.value > 0
+                            ? CommonCircularButton(
+                                onTap: () {
+                                  controller.backwardToPreviousPage();
+                                },
+                                iconImg: AppIcons.moveBackward,
+                              )
+                            : SizedBox(),
                         CommonCircularButton(
                           onTap: () {
                             controller.forwardToNextPage(context);

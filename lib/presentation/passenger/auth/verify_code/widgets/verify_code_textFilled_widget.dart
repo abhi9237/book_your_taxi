@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pinput/pinput.dart';
-
 import '../../../../../common/pin_put_theme.dart';
+import '../../../../../controller/passenger_auth_controller.dart';
 
 class VerifyCodeTextFilledWidget extends StatelessWidget {
-  const VerifyCodeTextFilledWidget({super.key});
+  final PassengerAuthController controller;
+  const VerifyCodeTextFilledWidget({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Pinput(
+        controller: controller.otpFilledController.value,
         defaultPinTheme: defaultPinTheme,
         focusedPinTheme: focusedPinTheme,
         submittedPinTheme: submittedPinTheme,

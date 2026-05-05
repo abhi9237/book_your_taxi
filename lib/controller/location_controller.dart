@@ -9,27 +9,32 @@ import '../service/location_service/location_service.dart';
 
 class LocationController extends GetxController {
   BuildContext context;
-  LocationController({required this.context});
+  final String comingFrom;
+  LocationController({required this.context, required this.comingFrom});
 
   @override
   void onInit() {
     onTapAllowLocationAccess();
     super.onInit();
   }
+
   //
   Future<bool> onTapAllowLocationAccess() async {
     try {
       await LocationService.getCurrentLocation();
       if (context.mounted) {
-        context.go(RouteConstant.bottomNav);
+        if (comingFrom == 'driver') {
+          context.go(RouteConstant.driverBottomNavigationBar);
+        } else if (comingFrom == 'passenger') {
+          context.go(RouteConstant.bottomNav);
+        }
       }
       return true;
     } on LocationPermissionPermanentlyDeniedException {
       if (context.mounted) {
         await openLocationPermissionDeniedBottomSheet(context);
       }
-    } catch (_) {
-    }
+    } catch (_) {}
 
     return false;
   }

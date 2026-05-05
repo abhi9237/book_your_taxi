@@ -6,6 +6,12 @@ class RouteConstant {
   static const String getStarted = '/getStarted';
   static const String verificationRequiredSteps = '/verificationRequiredSteps';
   static const String uploadProfilePicture = '/uploadProfilePicture';
+  static const String uploadBankAccuontDetail = '/uploadBankAccuontDetail';
+  static const String uploadDrivingLicenceDetail =
+      '/uploadDrivingLicenceDetail';
+  static const String uploadGovernmentId = '/uploadGovernmentId';
+  static const String driverBottomNavigationBar = '/driverBottomNavigationBar';
+  static const String driverHome = '/driverHome';
   static const String onBoardingPages = '/onBoardingPages';
   static const String otpVerification = '/otpVerification';
   static const String completeProfile = '/completeProfile';

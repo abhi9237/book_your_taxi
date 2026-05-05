@@ -35,6 +35,11 @@ import 'package:book_your_taxi/presentation/passenger/tip_for_driver/tip_for_dri
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/driver/upload_profile_picture/upload_profile_picture_screen.dart';
+import '../../presentation/driver/upload_bank_accuont_detail/upload_bank_accuont_detail_screen.dart';
+import '../../presentation/driver/driver_bottom_navigation_bar/driver_bottom_navigation_bar_screen.dart';
+import '../../presentation/driver/driver_home/driver_home_screen.dart';
+import '../../presentation/driver/upload_driving_licence_detail/upload_driving_licence_detail_screen.dart';
+import '../../presentation/driver/upload_government_id/upload_government_id_screen.dart';
 import '../../presentation/passenger/add_card/add_card.dart';
 import '../../presentation/passenger/auth/complete_profile/complete_profile.dart';
 import '../../presentation/passenger/auth/get_started/get_started.dart';
@@ -93,6 +98,41 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
+        path: RouteConstant.uploadBankAccuontDetail,
+        name: RouteConstant.uploadBankAccuontDetail,
+        builder: (context, state) {
+          return const UploadBankAccuontDetailScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.uploadDrivingLicenceDetail,
+        name: RouteConstant.uploadDrivingLicenceDetail,
+        builder: (context, state) {
+          return const UploadDrivingLicenceDetailScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.uploadGovernmentId,
+        name: RouteConstant.uploadGovernmentId,
+        builder: (context, state) {
+          return const UploadGovernmentIdScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.driverBottomNavigationBar,
+        name: RouteConstant.driverBottomNavigationBar,
+        builder: (context, state) {
+          return const DriverBottomNavigationBarScreen();
+        },
+      ),
+      GoRoute(
+        path: RouteConstant.driverHome,
+        name: RouteConstant.driverHome,
+        builder: (context, state) {
+          return const DriverHomeScreen();
+        },
+      ),
+      GoRoute(
         path: RouteConstant.onBoardingPages,
         name: RouteConstant.onBoardingPages,
         builder: (context, state) {
@@ -141,7 +181,10 @@ abstract class AppRouter {
         path: RouteConstant.locationAccess,
         name: RouteConstant.locationAccess,
         builder: (context, state) {
-          return LocationAccessScreen();
+          final String comingFrom = state.extra as String? ?? '';
+          return LocationAccessScreen(
+            comingFrom: comingFrom,
+          );
         },
       ),
       GoRoute(

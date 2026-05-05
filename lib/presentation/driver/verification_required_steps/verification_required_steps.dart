@@ -13,6 +13,33 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
       init: VerificationRequiredStepsController(),
       builder: (controller) {
         return Scaffold(
+          bottomNavigationBar: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            height: 100,
+            decoration: BoxDecoration(
+              color: ColorConstant.whiteColor,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorConstant.lightGreyColor.withValues(alpha: 0.2),
+                  offset: Offset(0, -2),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                CommonButton(
+                  buttonText: 'Continue',
+                  onTap: () {
+                 controller.onTapVerificationContinue(context);
+                  },
+                ),
+
+              ],
+            ),
+          ),
           backgroundColor: const Color(0xFFF6F6F6),
           body: SafeArea(
             child: Column(
@@ -106,29 +133,7 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                  decoration: BoxDecoration(
-                    color: ColorConstant.whiteColor,
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.black.withValues(alpha: 0.04),
-                      ),
-                    ),
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: CommonButton(
-                      buttonText: 'Continue',
-                      onTap: () => controller.onTapContinue(context),
-                      gradientColors: const [
-                        Color(0xFFF59B0B),
-                        Color(0xFFF59B0B),
-                      ],
-                      height: 52,
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ),

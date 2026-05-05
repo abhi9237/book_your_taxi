@@ -165,7 +165,9 @@ class PassengerAuthController extends GetxController {
       );
     } else {
       if (isSignInFlow.value) {
-        context.go(RouteConstant.locationAccess);
+        context.go(RouteConstant.locationAccess,
+          extra: 'passenger'
+        );
       } else {
         context.push(RouteConstant.completeProfile);
       }
@@ -228,7 +230,9 @@ class PassengerAuthController extends GetxController {
 
   void onTapCompleteProfileButton() {
     if (selectedUserRole == 'passenger') {
-      context.push(RouteConstant.locationAccess);
+      context.push(RouteConstant.locationAccess,
+      extra: 'passenger'
+      );
     } else {
       context.push(RouteConstant.verificationRequiredSteps);
     }

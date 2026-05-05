@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class LocationAccessScreen extends StatelessWidget {
-  const LocationAccessScreen({super.key});
+  final String comingFrom;
+  const LocationAccessScreen({super.key, required this.comingFrom});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LocationController>(
-      init: LocationController(context: context),
+      init: LocationController(context: context,
+      comingFrom: comingFrom
+      ),
       builder: (controller) {
         return Scaffold(
           bottomNavigationBar: Container(

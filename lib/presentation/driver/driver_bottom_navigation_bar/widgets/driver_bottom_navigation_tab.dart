@@ -27,8 +27,8 @@ class DriverBottomNavigationTab extends StatelessWidget {
             onTap: () => controller.onTapSelectedIndex(0),
           ),
           _NavTab(
-            icon: Icons.bar_chart_rounded,
-            title: 'Stats',
+            icon: Icons.movie_filter_outlined,
+            title: 'Feed',
             selected: controller.selectedIndex.value == 1,
             onTap: () => controller.onTapSelectedIndex(1),
           ),

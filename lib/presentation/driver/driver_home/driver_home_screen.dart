@@ -1,5 +1,6 @@
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/presentation/driver/driver_home/widgets/driver_home_hub_card.dart';
+import 'package:book_your_taxi/presentation/driver/driver_home/widgets/driver_home_recent_bookings_card.dart';
 import 'package:book_your_taxi/presentation/driver/driver_home/widgets/driver_home_stat_card.dart';
 import 'package:book_your_taxi/presentation/driver/driver_home/widgets/driver_home_trip_card.dart';
 import 'package:book_your_taxi/presentation/driver/driver_home/widgets/driver_home_weekly_chart_card.dart';
@@ -100,6 +101,8 @@ class DriverHomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     const DriverHomeTripCard(),
+                    const SizedBox(height: 10),
+                    const DriverHomeRecentBookingsCard(),
                     const SizedBox(height: 10),
                     const DriverHomeWeeklyChartCard(),
                     const SizedBox(height: 10),

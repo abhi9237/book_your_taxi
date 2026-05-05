@@ -1,4 +1,5 @@
 import 'package:book_your_taxi/presentation/driver/driver_home/driver_home_screen.dart';
+import 'package:book_your_taxi/presentation/driver/driver_reels_feed/driver_reels_feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,7 @@ class DriverBottomNavigationBarController extends GetxController {
 
   final List<Widget> screenList = <Widget>[
     const DriverHomeScreen(),
-    const _DriverStatsPlaceholder(),
+    const DriverReelsFeedScreen(),
     const _DriverActionPlaceholder(),
     const _DriverMessagesPlaceholder(),
     const _DriverProfilePlaceholder(),
@@ -16,15 +17,6 @@ class DriverBottomNavigationBarController extends GetxController {
   void onTapSelectedIndex(int index) {
     selectedIndex.value = index;
     update();
-  }
-}
-
-class _DriverStatsPlaceholder extends StatelessWidget {
-  const _DriverStatsPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const _DriverPlaceholder(title: 'Stats');
   }
 }
 

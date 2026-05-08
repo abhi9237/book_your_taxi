@@ -113,6 +113,8 @@ class ApiCall implements ApiRepository {
         if (data is FormData) 'Content-Type': 'multipart/form-data',
         if (extraHeaders != null) ...extraHeaders,
       };
+      log('End Point  $endPoint');
+      log('Headers  $hdrs');
       return await _dio.post<T>(
         endPoint,
         queryParameters: queryParameters,

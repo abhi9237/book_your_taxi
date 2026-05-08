@@ -26,9 +26,15 @@ class SearchingRideController extends GetxController {
     });
   }
 
+ void onTapGetStarted (){
+      if (context != null) {
+        context!.push(RouteConstant.createTrip);
+      }
+  }
+
   @override
   void onInit() {
-    startRideSearchFlow(context!);
+    // startRideSearchFlow(context!);
     super.onInit();
   }
 

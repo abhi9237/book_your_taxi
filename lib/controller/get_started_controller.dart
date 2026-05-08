@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:book_your_taxi/core/storage/hive_storage_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -39,6 +42,8 @@ class GetStartedController extends GetxController {
 
   void selectUserRole(String role) {
     selectedUserRole.value = role;
+    HiveStorageService.storeUserType(role);
+
     update();
   }
 }

@@ -1,7 +1,10 @@
 import 'package:book_your_taxi/presentation/driver/driver_home/driver_home_screen.dart';
 import 'package:book_your_taxi/presentation/driver/driver_reels_feed/driver_reels_feed_screen.dart';
+import 'package:book_your_taxi/presentation/passenger/chat_screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../presentation/driver/searching_ride/searching_ride.dart';
 
 class DriverBottomNavigationBarController extends GetxController {
   final RxInt selectedIndex = 0.obs;
@@ -9,8 +12,8 @@ class DriverBottomNavigationBarController extends GetxController {
   final List<Widget> screenList = <Widget>[
     const DriverHomeScreen(),
     const DriverReelsFeedScreen(),
-    const _DriverActionPlaceholder(),
-    const _DriverMessagesPlaceholder(),
+    const SearchingRideScreen(),
+    const ChatScreen(),
     const _DriverProfilePlaceholder(),
   ];
 

@@ -2,14 +2,18 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:book_your_taxi/core/image_constant/image_constant.dart';
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
+import 'package:book_your_taxi/core/storage/hive_storage_service.dart';
+import 'package:book_your_taxi/models/response/app_error_reponse.dart';
+import 'package:book_your_taxi/models/response/sign_up_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 import '../common/common_methods.dart';
 import '../core/country_code_json/country_code_json.dart';
 import '../models/common/country_model.dart';
+import '../repository/auth_repo/auth_repo.dart';
 
 class PassengerAuthController extends GetxController {
   final PageController pageController = PageController();
@@ -25,6 +29,8 @@ class PassengerAuthController extends GetxController {
       TextEditingController().obs;
   final Rx<TextEditingController> completeProfileGenderController =
       TextEditingController().obs;
+  AuthRepository repository = AuthRepository();
+
   final RxString selectedCountryCode = '+91'.obs;
   final RxString selectedCountryName = 'India'.obs;
   final Rxn<XFile> profileImage = Rxn<XFile>();
@@ -33,7 +39,8 @@ class PassengerAuthController extends GetxController {
   bool isChecked = false;
   final RxBool isSignInFlow = false.obs;
   RxBool isSendVerificationEmail = false.obs;
-  final String? selectedUserRole;
+  RxBool isVerifyOtp = false.obs;
+  String? selectedUserRole;
   var seconds = 30.obs;
   Timer? _timer;
   List<Country> countryCodeList = [];
@@ -95,6 +102,14 @@ class PassengerAuthController extends GetxController {
   void onInit() {
     super.onInit();
     getDataList();
+    loadInitUserType();
+  }
+
+  void loadInitUserType() {
+    if (HiveStorageService.getUserType() != null) {
+      selectedUserRole = HiveStorageService.getUserType() ?? '';
+    }
+    log('selected Role ${selectedUserRole}');
   }
 
   void getDataList() async {
@@ -156,21 +171,21 @@ class PassengerAuthController extends GetxController {
   }
 
   void onTapVerifyButton() {
-    if (otpFilledController.value.text.trim().length < 4) {
+    if (otpFilledController.value.text.trim().length < 6) {
       showToastMessage(
         isError: true,
         context: context,
         titleMessage: 'Error',
-        message: 'Please enter the 4 digit code',
+        message: 'Please enter the 6 digit code',
       );
     } else {
-      if (isSignInFlow.value) {
-        context.go(RouteConstant.locationAccess,
-          extra: 'passenger'
-        );
-      } else {
-        context.push(RouteConstant.completeProfile);
-      }
+      verifyOtp();
+      //
+      // if (isSignInFlow.value) {
+      //   context.go(RouteConstant.locationAccess, extra: 'passenger');
+      // } else {
+      //   context.push(RouteConstant.completeProfile);
+      // }
     }
   }
 
@@ -230,9 +245,7 @@ class PassengerAuthController extends GetxController {
 
   void onTapCompleteProfileButton() {
     if (selectedUserRole == 'passenger') {
-      context.push(RouteConstant.locationAccess,
-      extra: 'passenger'
-      );
+      context.push(RouteConstant.locationAccess, extra: 'passenger');
     } else {
       context.push(RouteConstant.verificationRequiredSteps);
     }
@@ -297,6 +310,13 @@ class PassengerAuthController extends GetxController {
         titleMessage: 'Error',
         message: 'Please enter password with at least 6 characters',
       );
+    } else if (isChecked == false) {
+      showToastMessage(
+        isError: true,
+        context: context,
+        titleMessage: 'Error',
+        message: 'Please agree to the terms and conditions',
+      );
     } else {
       await sendEmailForVerification();
     }
@@ -304,21 +324,28 @@ class PassengerAuthController extends GetxController {
 
   Future sendEmailForVerification() async {
     isSendVerificationEmail.value = true;
-    log('Error${isSendVerificationEmail.value}');
     try {
-      // final res = await signUpRepository.sendEmailVerification(
-      //   emailController.value.text,
+      // startTimer();
+      // context.push(
+      //   RouteConstant.verifyOtp,
+      //   extra: emailController.value.text.trim(),
       // );
-      // if (res != null) {
-      startTimer();
-      if (context.mounted) {
-        context.push(
-          RouteConstant.verifyOtp,
-          extra: emailController.value.text.trim(),
-        );
+
+      final res = await repository.sendOtp(
+        email: emailController.value.text.trim(),
+        password: passwordController.value.text.trim(),
+      );
+
+      if (res.statusCode == 200) {
+        startTimer();
+        if (context.mounted) {
+          context.push(
+            RouteConstant.verifyOtp,
+            extra: emailController.value.text.trim(),
+          );
+        }
       }
-      // }
-    } on AuthApiException catch (e, _) {
+    } on AppErrorResponse catch (e, _) {
       if (context.mounted) {
         showToastMessage(
           isError: true,
@@ -331,7 +358,96 @@ class PassengerAuthController extends GetxController {
     } finally {
       isSendVerificationEmail.value = false;
     }
+    update();
+  }
 
+  Future verifyOtp() async {
+    isVerifyOtp.value = true;
+    try {
+      final res = await repository.verifyOtp(
+        email: emailController.value.text.trim(),
+        otp: otpFilledController.value.text.trim(),
+      );
+
+      SignUpResponse response = SignUpResponse.fromJson(res.data ?? {});
+
+      if (res.statusCode == 200 || res.statusCode == 202) {
+        HiveStorageService.storeEmailVerified(
+          response.user?.emailVerified ?? true,
+        );
+        HiveStorageService.storeUserToken(response.accessToken ?? '');
+
+        if (context.mounted) {
+          if (isSignInFlow.value) {
+            context.go(RouteConstant.locationAccess, extra: 'passenger');
+          } else {
+            context.push(RouteConstant.completeProfile);
+          }
+        }
+      }
+    } on AppErrorResponse catch (e, _) {
+      if (context.mounted) {
+        showToastMessage(
+          isError: true,
+          context: context,
+          titleMessage: 'Error',
+          message: e.message.toString(),
+        );
+      }
+      log('Error${e.toString()}');
+    } finally {
+      isVerifyOtp.value = false;
+      log('${isVerifyOtp.value}');
+    }
+    update();
+  }
+
+  Future resendOtp() async {
+    isVerifyOtp.value = true;
+    try {
+      final res = await repository.resendOtp(
+        email: emailController.value.text.trim(),
+      );
+
+      if (res.statusCode == 200 || res.statusCode == 202) {
+        startTimer();
+        final data = res.data;
+        final messageFromApi = data?['message']?.toString();
+        final message = (messageFromApi?.trim().isNotEmpty ?? false)
+            ? messageFromApi!
+            : 'OTP sent successfully';
+
+        if (context.mounted) {
+          showToastMessage(
+            context: context,
+            titleMessage: 'Success',
+            message: message,
+            isError: false,
+          );
+        }
+      }
+    } on AppErrorResponse catch (e, _) {
+      if (context.mounted) {
+        showToastMessage(
+          isError: true,
+          context: context,
+          titleMessage: 'Error',
+          message: e.message.toString(),
+        );
+      }
+      log('Error${e.toString()}');
+    } catch (e) {
+      if (context.mounted) {
+        showToastMessage(
+          isError: true,
+          context: context,
+          titleMessage: 'Error',
+          message: e.toString().replaceFirst('Exception: ', ''),
+        );
+      }
+    } finally {
+      isVerifyOtp.value = false;
+    }
     update();
   }
 
@@ -344,13 +460,13 @@ class PassengerAuthController extends GetxController {
       // } else {
       //   log('Insert failed');
       // }
-    } on AuthApiException catch (e, _) {
+    } catch (e, _) {
       if (context.mounted) {
         showToastMessage(
           isError: true,
           context: context,
           titleMessage: 'Error',
-          message: e.message.toString(),
+          message: e.toString(),
         );
       }
       log('Error${e.toString()}');

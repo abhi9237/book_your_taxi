@@ -12,6 +12,7 @@ class RouteConstant {
   static const String uploadGovernmentId = '/uploadGovernmentId';
   static const String driverBottomNavigationBar = '/driverBottomNavigationBar';
   static const String driverHome = '/driverHome';
+  static const String createTrip = '/createTrip';
   static const String onBoardingPages = '/onBoardingPages';
   static const String otpVerification = '/otpVerification';
   static const String completeProfile = '/completeProfile';

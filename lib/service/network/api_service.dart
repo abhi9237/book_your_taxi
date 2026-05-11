@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:book_your_taxi/service/network/repo/api_repository.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get_connect/http/src/multipart/form_data.dart' as fData;
 
 class ApiCall implements ApiRepository {
   final Dio _dio = _buildDio();
@@ -110,7 +111,7 @@ class ApiCall implements ApiRepository {
     try {
       final hdrs = {
         ..._headers(token: token),
-        if (data is FormData) 'Content-Type': 'multipart/form-data',
+        if (data is fData.FormData) 'Content-Type': 'multipart/form-data',
         if (extraHeaders != null) ...extraHeaders,
       };
       log('End Point  $endPoint');

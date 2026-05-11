@@ -3,7 +3,10 @@ class StorageKeys {
 
   static const String appBox = 'app_box';
   static const String userToken = 'user_token';
+  static const String userId = 'user_id';
+  static const String refreshToken = 'refresh_token';
   static const String userType = 'user_type';
+  static const String userEmail = 'user_email';
   static const String emailVerified = 'email_verified';
   static const String passCompleteProfile = 'passCompleteProfile';
 }

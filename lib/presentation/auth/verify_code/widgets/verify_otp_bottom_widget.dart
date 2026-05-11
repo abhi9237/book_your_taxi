@@ -41,8 +41,6 @@ class VerifyOtpBottomWidget extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: () {
                 controller.resendOtp();
-
-
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(

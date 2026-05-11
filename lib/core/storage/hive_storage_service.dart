@@ -15,6 +15,14 @@ class HiveStorageService {
     await _box.put(StorageKeys.userToken, token);
   }
 
+  static Future<void> storeRefreshToken(String token) async {
+    await _box.put(StorageKeys.refreshToken, token);
+  }
+
+  static Future<void> storeCurrentUserId(String token) async {
+    await _box.put(StorageKeys.userId, token);
+  }
+
   static Future<void> storeEmailVerified(bool verify) async {
     await _box.put(StorageKeys.emailVerified, verify);
   }
@@ -22,6 +30,11 @@ class HiveStorageService {
   static Future<void> storeUserType(String type) async {
     await _box.put(StorageKeys.userType, type);
   }
+
+  static Future<void> storeUserEmail(String type) async {
+    await _box.put(StorageKeys.userEmail, type);
+  }
+
 
   static Future<void> storePassCompleteProfile(bool type) async {
     await _box.put(StorageKeys.passCompleteProfile, type);
@@ -33,6 +46,18 @@ class HiveStorageService {
 
   static String? getUserToken() {
     return _box.get(StorageKeys.userToken) as String?;
+  }
+
+  static String? getUserId() {
+    return _box.get(StorageKeys.userId) as String?;
+  }
+
+  static String? getRefreshToken() {
+    return _box.get(StorageKeys.refreshToken) as String?;
+  }
+
+  static String? getUserEmail() {
+    return _box.get(StorageKeys.userEmail) as String?;
   }
 
   static bool? getEmailVerify() {

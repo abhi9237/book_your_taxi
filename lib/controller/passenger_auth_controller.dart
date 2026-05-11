@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:book_your_taxi/core/image_constant/image_constant.dart';
 import 'package:book_your_taxi/core/route/route_constant/route_constant.dart';
 import 'package:book_your_taxi/core/storage/hive_storage_service.dart';
+import 'package:book_your_taxi/models/common/user_image.dart';
 import 'package:book_your_taxi/models/response/app_error_reponse.dart';
 import 'package:book_your_taxi/models/response/sign_up_response.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ import '../common/common_methods.dart';
 import '../core/country_code_json/country_code_json.dart';
 import '../models/common/country_model.dart';
 import '../repository/auth_repo/auth_repo.dart';
+import 'package:dio/dio.dart' as dio;
 
 class PassengerAuthController extends GetxController {
   final PageController pageController = PageController();
@@ -41,6 +44,7 @@ class PassengerAuthController extends GetxController {
   RxBool isSendVerificationEmail = false.obs;
   RxBool isVerifyOtp = false.obs;
   String? selectedUserRole;
+  String uploadUrl = '';
   var seconds = 30.obs;
   Timer? _timer;
   List<Country> countryCodeList = [];
@@ -108,6 +112,10 @@ class PassengerAuthController extends GetxController {
   void loadInitUserType() {
     if (HiveStorageService.getUserType() != null) {
       selectedUserRole = HiveStorageService.getUserType() ?? '';
+      emailController.value.text = HiveStorageService.getUserEmail() ?? '';
+    }
+    if (HiveStorageService.getUserEmail() != null) {
+      emailController.value.text = HiveStorageService.getUserEmail() ?? '';
     }
     log('selected Role ${selectedUserRole}');
   }
@@ -180,12 +188,6 @@ class PassengerAuthController extends GetxController {
       );
     } else {
       verifyOtp();
-      //
-      // if (isSignInFlow.value) {
-      //   context.go(RouteConstant.locationAccess, extra: 'passenger');
-      // } else {
-      //   context.push(RouteConstant.completeProfile);
-      // }
     }
   }
 
@@ -238,14 +240,132 @@ class PassengerAuthController extends GetxController {
     update();
   }
 
+  Future completePassengerProfile() async {
+    try {
+      if (profileImage.value != null) {
+        uploadUrl = await uploadUserProfileImage(
+          File(profileImage.value?.path ?? ''),
+        );
+      }
+      if (uploadUrl.isNotEmpty) {
+        Map<String, dynamic> data = <String, dynamic>{
+          "id": HiveStorageService.getUserId(),
+          "name": nameController.value.text.trim(),
+          "email": emailController.value.text.trim(),
+          "phone_number": completeProfilePhoneController.value.text.trim(),
+          "gender": completeProfileGenderController.value.text.trim(),
+          'profile_image': uploadUrl,
+          'type': HiveStorageService.getUserType(),
+        };
+
+        log('data===>$data');
+
+        final res = await repository.addPassengerProfile(data: data);
+
+        if (res.statusCode == 200 || res.statusCode == 201) {
+          log('User added successfully');
+          HiveStorageService.storePassCompleteProfile(true);
+          if (context.mounted) {
+            context.push(RouteConstant.locationAccess, extra: 'passenger');
+          }
+        } else {
+          log('Insert failed');
+        }
+      }
+    } on AppErrorResponse catch (e, _) {
+      log('Insert failed${e.message.toString()}');
+      if (context.mounted) {
+        showToastMessage(
+          isError: true,
+          context: context,
+          titleMessage: 'Error',
+          message: e.message.toString(),
+        );
+      }
+      log('Error${e.toString()}');
+    } finally {
+      isSendVerificationEmail.value = false;
+    }
+  }
+
+  Future<String> uploadUserProfileImage(File image) async {
+    try {
+      String fileName = image.path.split('/').last;
+      final formData = dio.FormData.fromMap({
+        'file': await dio.MultipartFile.fromFile(
+          image.path,
+          filename: fileName,
+        ),
+      });
+
+      final res = await repository.uploadUserProfileImage(formData);
+      final UserImage response = UserImage.fromJson(res.data ?? {});
+      log('response.url===>${response.url}');
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return response.url ?? '';
+      }
+    } on AppErrorResponse catch (e, _) {
+      log('response.url===>${e.message.toString()}');
+      if (context.mounted) {
+        showToastMessage(
+          isError: true,
+          context: context,
+          titleMessage: 'Error',
+          message: e.message.toString(),
+        );
+      }
+    } finally {
+      isSendVerificationEmail.value = false;
+    }
+    return '';
+  }
+
   Future<void> onBoardingPageSelection(int index) async {
     currentIndex.value = index;
     update();
   }
 
-  void onTapCompleteProfileButton() {
+  void onTapCompleteProfileButton() async {
     if (selectedUserRole == 'passenger') {
-      context.push(RouteConstant.locationAccess, extra: 'passenger');
+      if ((profileImage.value?.path ?? '').isEmpty) {
+        showToastMessage(
+          titleMessage: 'Error',
+          message: 'Please select your profile image',
+          context: context,
+          isError: true,
+        );
+      } else if (nameController.value.text.trim().isEmpty) {
+        showToastMessage(
+          titleMessage: 'Error',
+          message: 'Please enter your name',
+          context: context,
+          isError: true,
+        );
+      } else if (emailController.value.text.trim().isEmpty) {
+        showToastMessage(
+          titleMessage: 'Error',
+          message: 'Please enter your email address',
+          context: context,
+          isError: true,
+        );
+      } else if (completeProfilePhoneController.value.text.trim().isEmpty) {
+        showToastMessage(
+          titleMessage: 'Error',
+          message: 'Please enter your phone number',
+          context: context,
+          isError: true,
+        );
+      } else if (completeProfileGenderController.value.text.isEmpty) {
+        showToastMessage(
+          titleMessage: 'Error',
+          message: 'Please select your gender',
+          context: context,
+          isError: true,
+        );
+      } else {
+        await completePassengerProfile();
+      }
+      // context.push(RouteConstant.locationAccess, extra: 'passenger');
     } else {
       context.push(RouteConstant.verificationRequiredSteps);
     }
@@ -364,6 +484,8 @@ class PassengerAuthController extends GetxController {
   Future verifyOtp() async {
     isVerifyOtp.value = true;
     try {
+      // context.push(RouteConstant.completeProfile);
+
       final res = await repository.verifyOtp(
         email: emailController.value.text.trim(),
         otp: otpFilledController.value.text.trim(),
@@ -376,6 +498,9 @@ class PassengerAuthController extends GetxController {
           response.user?.emailVerified ?? true,
         );
         HiveStorageService.storeUserToken(response.accessToken ?? '');
+        HiveStorageService.storeRefreshToken(response.csrfToken ?? '');
+        HiveStorageService.storeCurrentUserId(response.user?.id ?? '');
+        HiveStorageService.storeUserEmail(response.user?.email ?? '');
 
         if (context.mounted) {
           if (isSignInFlow.value) {

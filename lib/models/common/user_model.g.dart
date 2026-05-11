@@ -16,6 +16,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       ?.map((e) => e as String)
       .toList(),
   type: json['type'] as String?,
+  name: json['name'] as String?,
+  profileImage: json['profileImage'] as String?,
+  gender: json['gender'] as String?,
+  phoneNumber: json['phoneNumber'] as String?,
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -25,5 +29,9 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'createdAt': instance.createdAt,
   'updatedAt': instance.updatedAt,
   'type': instance.type,
+  'profileImage': instance.profileImage,
+  'gender': instance.gender,
+  'phoneNumber': instance.phoneNumber,
+  'name': instance.name,
   'providers': instance.providers,
 };

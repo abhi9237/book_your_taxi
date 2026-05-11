@@ -10,6 +10,10 @@ class UserModel {
   String? createdAt;
   String? updatedAt;
   String? type;
+  String? profileImage;
+  String? gender;
+  String? phoneNumber;
+  String? name;
   List<String>? providers;
 
   UserModel({
@@ -20,6 +24,10 @@ class UserModel {
     this.updatedAt,
     this.providers,
     this.type,
+    this.name,
+    this.profileImage,
+    this.gender,
+    this.phoneNumber,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

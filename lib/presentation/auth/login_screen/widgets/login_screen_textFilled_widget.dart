@@ -25,7 +25,7 @@ class LoginScreenTextFilledWidget extends StatelessWidget {
             ),
           ),
           CommonTextFormFilled(
-            hintText: 'example.gmail.com',
+            hintText: 'example@gmail.com',
             controller: controller.emailController.value,
           ),
           SizedBox(height: 10),

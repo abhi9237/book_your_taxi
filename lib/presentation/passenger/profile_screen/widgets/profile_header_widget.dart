@@ -13,7 +13,8 @@ class ProfileHeaderWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          _RoundBackButton(onTap: onBackTap),
+          const SizedBox(width: 44),
+          // _RoundBackButton(onTap: onBackTap),
           const Expanded(
             child: Center(
               child: Text(

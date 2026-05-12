@@ -1,5 +1,4 @@
 import 'package:book_your_taxi/common/common_button.dart';
-import 'package:book_your_taxi/controller/upload_profile_picture_controller.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/presentation/driver/upload_profile_picture/widget/upload_profile_picture_guideline_item.dart';
 import 'package:book_your_taxi/presentation/driver/upload_profile_picture/widget/upload_profile_picture_widget.dart';
@@ -7,13 +6,15 @@ import 'package:book_your_taxi/presentation/driver/upload_profile_picture/widget
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+import '../../../controller/verification_required_steps_controller.dart';
+
 class UploadProfilePictureScreen extends StatelessWidget {
   const UploadProfilePictureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UploadProfilePictureController>(
-      init: UploadProfilePictureController(),
+    return GetBuilder<VerificationRequiredStepsController>(
+      init: VerificationRequiredStepsController(),
       builder: (controller) {
         return Scaffold(
           backgroundColor: const Color(0xFFF6F6F6),
@@ -100,10 +101,10 @@ class UploadProfilePictureScreen extends StatelessWidget {
                           onTap: () => _showPickerSheet(context, controller),
                         ),
                         const SizedBox(height: 20),
-                        if (controller.selectedFile.value != null)
+                        if (controller.selectedProfileFile.value != null)
                           SelectedFileCard(
-                            file: controller.selectedFile.value!,
-                            onRemove: controller.removeSelectedFile,
+                            file: controller.selectedProfileFile.value!,
+                            onRemove:()=> controller.removeSelectedFile("profile"),
                           ),
                         const SizedBox(height: 20),
                       ],
@@ -145,7 +146,7 @@ class UploadProfilePictureScreen extends StatelessWidget {
 
   void _showPickerSheet(
     BuildContext context,
-    UploadProfilePictureController controller,
+      VerificationRequiredStepsController controller,
   ) {
     showModalBottomSheet(
       context: context,
@@ -174,7 +175,7 @@ class UploadProfilePictureScreen extends StatelessWidget {
                   title: 'Choose from gallery',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromGallery();
+                    await controller.pickFromGallery("profile");
                   },
                 ),
                 const SizedBox(height: 12),
@@ -183,7 +184,7 @@ class UploadProfilePictureScreen extends StatelessWidget {
                   title: 'Take a photo',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromCamera();
+                    await controller.pickFromCamera("profile");
                   },
                 ),
                 const SizedBox(height: 10),

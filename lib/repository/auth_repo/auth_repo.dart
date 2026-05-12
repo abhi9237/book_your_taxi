@@ -29,6 +29,27 @@ class AuthRepository {
     }
   }
 
+  Future<Response<Map<String, dynamic>>> logInUser({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await apiCall.postRequest<Map<String, dynamic>>(
+        data: {'email': email, 'password': password},
+        endPoint: ApiConstant.login,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw _parseError(response.data, response.statusCode);
+      }
+    } on AppErrorResponse {
+      rethrow;
+    } catch (e) {
+      throw Exception('Error sending OTP: $e');
+    }
+  }
+
   Future<void> refreshAppToken({required String refreshToken}) async {
     try {
       final response = await apiCall.postRequest<Map<String, dynamic>>(
@@ -49,7 +70,7 @@ class AuthRepository {
     }
   }
 
-  Future<Response<dynamic>> addPassengerProfile({
+  Future<Response> addPassengerProfile({
     Map<String, dynamic>? data,
   }) async {
     try {
@@ -58,7 +79,7 @@ class AuthRepository {
         endPoint: ApiConstant.addUser,
         token: HiveStorageService.getUserToken(),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return response;
       } else {
         throw _parseError(response.data, response.statusCode);

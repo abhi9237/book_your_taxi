@@ -13,23 +13,6 @@ class CompleteProfileTopWidget extends StatelessWidget {
     return Column(
       spacing: 15,
       children: [
-        // Align(
-        //   alignment: Alignment.topLeft,
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       controller.onTabBackButton(context);
-        //     },
-        //     child: Container(
-        //       height: 40,
-        //       width: 40,
-        //       decoration: BoxDecoration(
-        //         shape: BoxShape.circle,
-        //         border: Border.all(color: ColorConstant.lightGreyColor),
-        //       ),
-        //       child: Icon(Icons.keyboard_backspace, size: 22),
-        //     ),
-        //   ),
-        // ),
 
         SizedBox(height: 10),
         Text(

@@ -1,4 +1,5 @@
 import 'package:book_your_taxi/common/common_button.dart';
+import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import '../../../../../controller/passenger_auth_controller.dart';
 
@@ -11,6 +12,6 @@ class CompleteProfileButtonWidget extends StatelessWidget {
     return CommonButton(
       buttonText: 'Complete Profile',
       onTap: controller.onTapCompleteProfileButton,
-    );
+    ) ;
   }
 }

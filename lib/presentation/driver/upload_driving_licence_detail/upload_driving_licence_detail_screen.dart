@@ -1,19 +1,19 @@
 import 'package:book_your_taxi/common/common_button.dart';
-import 'package:book_your_taxi/controller/upload_driving_licence_detail_controller.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
 import 'package:book_your_taxi/presentation/driver/upload_driving_licence_detail/widget/upload_driving_licence_drop_zone.dart';
 import 'package:book_your_taxi/presentation/driver/upload_driving_licence_detail/widget/upload_driving_licence_guideline_item.dart';
 import 'package:book_your_taxi/presentation/driver/upload_driving_licence_detail/widget/upload_driving_licence_selected_file_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import '../../../controller/verification_required_steps_controller.dart';
 
 class UploadDrivingLicenceDetailScreen extends StatelessWidget {
   const UploadDrivingLicenceDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UploadDrivingLicenceDetailController>(
-      init: UploadDrivingLicenceDetailController(),
+    return GetBuilder<VerificationRequiredStepsController>(
+      init: VerificationRequiredStepsController(),
       builder: (controller) {
         return Scaffold(
           bottomNavigationBar: Container(
@@ -39,7 +39,6 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
                     // controller.onTapAllowLocationAccess(context);
                   },
                 ),
-
               ],
             ),
           ),
@@ -159,23 +158,25 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         Row(
                           children: [
-                            if (controller.frontFile.value != null)
+                            if (controller.licenceFrontFile.value != null)
                               UploadDrivingLicenceSelectedFileCard(
-                                file: controller.frontFile.value!,
+                                file: controller.licenceFrontFile.value!,
                                 label: 'Front',
-                                onRemove: () => controller.removeFile(
-                                  DrivingLicenceSide.front,
+                                onRemove: () => controller.removeSelectedFile(
+                                  'licence',
+                                  side: DrivingLicenceSide.front,
                                 ),
                               ),
-                            if (controller.frontFile.value != null &&
-                                controller.backFile.value != null)
+                            if (controller.licenceFrontFile.value != null &&
+                                controller.licenceBackFile.value != null)
                               const SizedBox(width: 18),
-                            if (controller.backFile.value != null)
+                            if (controller.licenceBackFile.value != null)
                               UploadDrivingLicenceSelectedFileCard(
-                                file: controller.backFile.value!,
+                                file: controller.licenceBackFile.value!,
                                 label: 'Back',
-                                onRemove: () => controller.removeFile(
-                                  DrivingLicenceSide.back,
+                                onRemove: () => controller.removeSelectedFile(
+                                  'licence',
+                                  side: DrivingLicenceSide.back,
                                 ),
                               ),
                           ],
@@ -185,7 +186,6 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -196,7 +196,7 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
 
   void _showPickerSheet(
     BuildContext context,
-    UploadDrivingLicenceDetailController controller,
+    VerificationRequiredStepsController controller,
     DrivingLicenceSide side,
   ) {
     showModalBottomSheet(
@@ -243,7 +243,7 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
                   title: 'Choose from gallery',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromGallery(side);
+                    await controller.pickFromGallery('licence', side: side);
                   },
                 ),
                 const SizedBox(height: 12),
@@ -252,7 +252,7 @@ class UploadDrivingLicenceDetailScreen extends StatelessWidget {
                   title: 'Take a photo',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromCamera(side);
+                    await controller.pickFromCamera('licence', side: side);
                   },
                 ),
                 const SizedBox(height: 10),

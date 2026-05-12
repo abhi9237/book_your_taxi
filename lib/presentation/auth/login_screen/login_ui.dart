@@ -1,3 +1,4 @@
+import 'package:book_your_taxi/common/app_loader.dart';
 import 'package:book_your_taxi/presentation/auth/login_screen/widgets/login_screen_button_widget.dart';
 import 'package:book_your_taxi/presentation/auth/login_screen/widgets/login_screen_textFilled_widget.dart';
 import 'package:book_your_taxi/presentation/auth/login_screen/widgets/login_screen_top_widget.dart';
@@ -14,14 +15,17 @@ class LoginScreen extends StatelessWidget {
     return GetBuilder<PassengerAuthController>(
       init: PassengerAuthController(context: context),
       builder: (controller) {
-        return Scaffold(
-          body: SafeArea(
-            child: Column(
-              children: [
-                LoginScreenTopWidget(),
-                LoginScreenTextFilledWidget(controller: controller),
-                LoginScreenButtonWidget(controller: controller),
-              ],
+        return AppLoader(
+          isLoading: controller.isLoginLoading,
+          child: Scaffold(
+            body: SafeArea(
+              child: Column(
+                children: [
+                  LoginScreenTopWidget(),
+                  LoginScreenTextFilledWidget(controller: controller),
+                  LoginScreenButtonWidget(controller: controller),
+                ],
+              ),
             ),
           ),
         );

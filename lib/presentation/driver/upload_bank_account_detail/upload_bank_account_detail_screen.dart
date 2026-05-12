@@ -1,19 +1,20 @@
 import 'package:book_your_taxi/common/common_button.dart';
 import 'package:book_your_taxi/controller/upload_bank_accuont_detail_controller.dart';
+import 'package:book_your_taxi/controller/verification_required_steps_controller.dart';
 import 'package:book_your_taxi/core/color_constant/color_constant.dart';
-import 'package:book_your_taxi/presentation/driver/upload_bank_accuont_detail/widget/upload_bank_accuont_drop_zone.dart';
-import 'package:book_your_taxi/presentation/driver/upload_bank_accuont_detail/widget/upload_bank_accuont_guideline_item.dart';
-import 'package:book_your_taxi/presentation/driver/upload_bank_accuont_detail/widget/upload_bank_accuont_selected_file_card.dart';
+import 'package:book_your_taxi/presentation/driver/upload_bank_account_detail/widget/upload_bank_accuont_drop_zone.dart';
+import 'package:book_your_taxi/presentation/driver/upload_bank_account_detail/widget/upload_bank_accuont_guideline_item.dart';
+import 'package:book_your_taxi/presentation/driver/upload_bank_account_detail/widget/upload_bank_accuont_selected_file_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
-class UploadBankAccuontDetailScreen extends StatelessWidget {
-  const UploadBankAccuontDetailScreen({super.key});
+class UploadBankAccountDetailScreen extends StatelessWidget {
+  const UploadBankAccountDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UploadBankAccuontDetailController>(
-      init: UploadBankAccuontDetailController(),
+    return GetBuilder<VerificationRequiredStepsController>(
+      init: VerificationRequiredStepsController(),
       builder: (controller) {
         return Scaffold(
           bottomNavigationBar: Container(
@@ -39,7 +40,6 @@ class UploadBankAccuontDetailScreen extends StatelessWidget {
                     // controller.onTapAllowLocationAccess(context);
                   },
                 ),
-
               ],
             ),
           ),
@@ -124,17 +124,16 @@ class UploadBankAccuontDetailScreen extends StatelessWidget {
                           onTap: () => _showPickerSheet(context, controller),
                         ),
                         const SizedBox(height: 20),
-                        if (controller.selectedFile.value != null)
+                        if (controller.selectedBankAccountFile.value != null)
                           UploadBankAccuontSelectedFileCard(
-                            file: controller.selectedFile.value!,
-                            onRemove: controller.removeSelectedFile,
+                            file: controller.selectedBankAccountFile.value!,
+                            onRemove: ()=> controller.removeSelectedFile("bank"),
                           ),
                         const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -145,7 +144,7 @@ class UploadBankAccuontDetailScreen extends StatelessWidget {
 
   void _showPickerSheet(
     BuildContext context,
-    UploadBankAccuontDetailController controller,
+      VerificationRequiredStepsController controller,
   ) {
     showModalBottomSheet(
       context: context,
@@ -174,7 +173,7 @@ class UploadBankAccuontDetailScreen extends StatelessWidget {
                   title: 'Choose from gallery',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromGallery();
+                    await controller.pickFromGallery("bank");
                   },
                 ),
                 const SizedBox(height: 12),
@@ -183,7 +182,7 @@ class UploadBankAccuontDetailScreen extends StatelessWidget {
                   title: 'Take a photo',
                   onTap: () async {
                     Navigator.of(sheetContext).pop();
-                    await controller.pickFromCamera();
+                    await controller.pickFromCamera("bank");
                   },
                 ),
                 const SizedBox(height: 10),

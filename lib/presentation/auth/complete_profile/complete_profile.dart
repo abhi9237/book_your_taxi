@@ -1,3 +1,4 @@
+import 'package:book_your_taxi/common/app_loader.dart';
 import 'package:book_your_taxi/presentation/auth/complete_profile/widgets/complete_profile_button_widget.dart';
 import 'package:book_your_taxi/presentation/auth/complete_profile/widgets/complete_profile_text_widget.dart';
 import 'package:book_your_taxi/presentation/auth/complete_profile/widgets/complete_profile_top_widget.dart';
@@ -13,24 +14,27 @@ class CompleteProfile extends StatelessWidget {
     return GetBuilder<PassengerAuthController>(
       init: PassengerAuthController(context: context),
       builder: (controller) {
-        return Scaffold(
-          bottomNavigationBar: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-            child: CompleteProfileButtonWidget(controller: controller),
-          ),
-          body: SafeArea(
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CompleteProfileTopWidget(controller: controller),
-                      CompleteProfileTextFilledWidget(controller: controller),
-                    ],
+        return AppLoader(
+          isLoading: controller.isLoadingUserProfile,
+          child: Scaffold(
+            bottomNavigationBar: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+              child: CompleteProfileButtonWidget(controller: controller),
+            ),
+            body: SafeArea(
+              child: SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CompleteProfileTopWidget(controller: controller),
+                        CompleteProfileTextFilledWidget(controller: controller),
+                      ],
+                    ),
                   ),
                 ),
               ),

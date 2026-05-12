@@ -19,19 +19,22 @@ class SplashController extends GetxController {
   Future<void> initSplashScreen(BuildContext context) async {
     await Future.delayed(Duration(seconds: 3));
     if (context.mounted) {
-
       log('${HiveStorageService.getUserToken()}');
       log('${HiveStorageService.getEmailVerify()}');
-      log('${  HiveStorageService.passCompleteProfile()}');
+      log('${HiveStorageService.getCompleteProfile()}');
       if (HiveStorageService.getUserToken() != null) {
         if (HiveStorageService.getEmailVerify() == true &&
-           ( HiveStorageService.passCompleteProfile() ?? false)== false) {
+            (HiveStorageService.getCompleteProfile() ?? false) == false) {
           context.go(RouteConstant.completeProfile);
         } else {
           if (HiveStorageService.getUserType() == 'passenger') {
             context.go(RouteConstant.bottomNav);
           } else if (HiveStorageService.getUserType() == 'driver') {
-            context.go(RouteConstant.driverBottomNavigationBar);
+            if ((HiveStorageService.getDocVerified() ?? false) == false) {
+              context.go(RouteConstant.verificationRequiredSteps);
+            } else {
+              context.go(RouteConstant.driverBottomNavigationBar);
+            }
           }
         }
       } else {

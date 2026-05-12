@@ -7,6 +7,7 @@ class StorageKeys {
   static const String refreshToken = 'refresh_token';
   static const String userType = 'user_type';
   static const String userEmail = 'user_email';
+  static const String storeDocVerified = 'store_doc_verified';
   static const String emailVerified = 'email_verified';
   static const String passCompleteProfile = 'passCompleteProfile';
 }

@@ -35,8 +35,8 @@ import '../../presentation/auth/splash_screen/splash_screen.dart';
 import '../../presentation/auth/verify_code/verify_code.dart';
 import '../../presentation/auth/verify_email/verify_email.dart';
 import '../../presentation/driver/searching_ride/searching_ride.dart';
+import '../../presentation/driver/upload_bank_account_detail/upload_bank_account_detail_screen.dart';
 import '../../presentation/driver/upload_profile_picture/upload_profile_picture_screen.dart';
-import '../../presentation/driver/upload_bank_accuont_detail/upload_bank_accuont_detail_screen.dart';
 import '../../presentation/driver/driver_bottom_navigation_bar/driver_bottom_navigation_bar_screen.dart';
 import '../../presentation/driver/driver_home/driver_home_screen.dart';
 import '../../presentation/driver/create_trip/create_trip_screen.dart';
@@ -87,7 +87,8 @@ abstract class AppRouter {
         path: RouteConstant.verificationRequiredSteps,
         name: RouteConstant.verificationRequiredSteps,
         builder: (context, state) {
-          return const VerificationRequiredStepsScreen();
+          final String driverName = state.extra as String? ?? '';
+          return VerificationRequiredStepsScreen(driverName: driverName);
         },
       ),
       GoRoute(
@@ -101,7 +102,7 @@ abstract class AppRouter {
         path: RouteConstant.uploadBankAccuontDetail,
         name: RouteConstant.uploadBankAccuontDetail,
         builder: (context, state) {
-          return const UploadBankAccuontDetailScreen();
+          return const UploadBankAccountDetailScreen();
         },
       ),
       GoRoute(

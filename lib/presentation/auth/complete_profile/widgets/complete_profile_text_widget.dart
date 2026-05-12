@@ -5,6 +5,7 @@ import '../../../../../controller/passenger_auth_controller.dart';
 import '../../../../../core/color_constant/color_constant.dart';
 import 'bottom_sheets/complete_profile_country_code_bottom_sheet.dart';
 import 'bottom_sheets/complete_profile_gender_bottom_sheet.dart';
+import 'bottom_sheets/complete_profile_state_bottom_sheet.dart';
 
 class CompleteProfileTextFilledWidget extends StatelessWidget {
   final PassengerAuthController controller;
@@ -129,10 +130,12 @@ class CompleteProfileTextFilledWidget extends StatelessWidget {
               ),
               SizedBox(height: 10),
               CommonTextFormFilled(
-                onTap: () {},
+                onTap: () {
+                  openCompleteProfileStateBottomSheet(context, controller);
+                },
                 suffixIcon: Icons.arrow_drop_down_sharp,
-                hintText: 'City',
-                controller: controller.completeProfileGenderController.value,
+                hintText: 'Select state',
+                controller: controller.completeProfileLocationController.value,
                 readOnly: true,
               ),
             ],

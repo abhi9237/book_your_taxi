@@ -35,8 +35,13 @@ class HiveStorageService {
     await _box.put(StorageKeys.userEmail, type);
   }
 
+  static Future<void> storeDriverDocVerified(bool type) async {
+    await _box.put(StorageKeys.storeDocVerified, type);
+  }
 
-  static Future<void> storePassCompleteProfile(bool type) async {
+
+
+  static Future<void> storeCompleteProfile(bool type) async {
     await _box.put(StorageKeys.passCompleteProfile, type);
   }
 
@@ -64,12 +69,16 @@ class HiveStorageService {
     return _box.get(StorageKeys.emailVerified) as bool?;
   }
 
-  static bool? passCompleteProfile() {
+  static bool? getCompleteProfile() {
     return _box.get(StorageKeys.passCompleteProfile) as bool?;
   }
 
   static String? getUserType() {
     return _box.get(StorageKeys.userType) as String?;
+  }
+
+  static bool? getDocVerified() {
+    return _box.get(StorageKeys.storeDocVerified) as bool?;
   }
 
   static Future<void> eraseAllData() async {

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class VerificationRequiredStepsScreen extends StatelessWidget {
-  const VerificationRequiredStepsScreen({super.key});
+  final String driverName;
+  const VerificationRequiredStepsScreen({super.key, required this.driverName});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +34,9 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
                 CommonButton(
                   buttonText: 'Continue',
                   onTap: () {
-                 controller.onTapVerificationContinue(context);
+                    controller.onTapVerificationContinue(context);
                   },
                 ),
-
               ],
             ),
           ),
@@ -50,37 +50,12 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(999),
-                          onTap: () => controller.onTapBack(context),
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: ColorConstant.whiteColor,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: const Color(0xFFE9E9E9),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.04),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 16,
-                              color: Color(0xFF2B2B2B),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 46),
+                        const SizedBox(height: 36),
                         Center(
                           child: Text(
-                            'Welcome!, ${controller.driverName}',
+                            driverName.isEmpty
+                                ? 'Welcome!'
+                                : 'Welcome!, $driverName',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: ColorConstant.blackColor,
@@ -90,7 +65,7 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 38),
                         const Text(
                           'Required Steps',
                           style: TextStyle(
@@ -133,7 +108,6 @@ class VerificationRequiredStepsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -147,10 +121,7 @@ class _VerificationStepTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const _VerificationStepTile({
-    required this.title,
-    required this.onTap,
-  });
+  const _VerificationStepTile({required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
